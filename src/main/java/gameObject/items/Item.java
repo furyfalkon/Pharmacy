@@ -3,7 +3,6 @@ package gameObject.items;
 import gameObject.*;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 public abstract class Item extends GameObject {
     
@@ -13,14 +12,14 @@ public abstract class Item extends GameObject {
 
 
 
-    public Item(Image img,String name, int basevalue, boolean craftable) {
-        super(img,0,0,0,0);
+    public Item(Image img,int layer ,String name, int basevalue, boolean craftable) {
+        super(img,false,layer,0,0,0,0);
 
-        ziseX = 0;
-        ziseY =0;
+        sizeX = 0;
+        sizeY =0;
         try {
-            ziseX= img.getWidth(null);
-            ziseY= img.getHeight(null);
+            sizeX= img.getWidth(null);
+            sizeY = img.getHeight(null);
         }catch (Exception e){
             throw e;
         }

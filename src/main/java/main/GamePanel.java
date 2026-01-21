@@ -40,11 +40,12 @@ GameObjekts gameObjekts;
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d= (Graphics2D) g;
-        g2d.setColor(Color.white);
-        g2d.drawRect(1,1,100,100);
+
         for (int i = 0; i <gameObjekts.getGameObjects().size(); i++) {
            GameObject aktuellesGameobjekt= gameObjekts.getGameObjects().get(i);
-            g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.g);
+           if (aktuellesGameobjekt.isVisible()){
+            g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.getPositionX(),aktuellesGameobjekt.getPositionY(),null);
+           }
         }
 
         System.out.println("Painting");
