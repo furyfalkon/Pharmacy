@@ -14,7 +14,7 @@ public  class MapBuilder {
     public  static GameObjects buildMap(GameObjects gameObjects){
         Background tempBackground =new Background( ImageLoader.loadImage("TempHintergrund.png"));
         gameObjects.addGameObjekt(tempBackground);
-        Storage tempstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),1,10,10,10,10);
+        Storage tempstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),1,10,10,1,1);
         tempstorage.setVisible(true);
         gameObjects.addGameObjekt(tempstorage);
 

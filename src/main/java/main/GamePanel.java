@@ -5,6 +5,7 @@ package main;
 import gameObject.GameObject;
 import gameObject.GameObjects;
 import gamelogic.GameLogic;
+import gamelogic.MouseInput;
 import maps.MapBuilder;
 
 import javax.swing.*;
@@ -39,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(defaultwidth,defaultheight));
         this.setBackground(Color.darkGray);
         this.setDoubleBuffered(true);
+        this.addMouseListener(new MouseInput());
     }
 
     /**
@@ -56,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
         Timer t = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                GameLogic.update(gameObjects,actionEvent);
+                gameObjects=GameLogic.update(gameObjects,actionEvent);
                 repaint();
             }
         });
@@ -85,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
         System.out.println("finished Painting"); //Statusmeldung in der Konsole
     }
 
-
-
-
+    public GameObjects getPanelGameObjects() {
+        return gameObjects;
+    }
 }
