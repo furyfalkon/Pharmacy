@@ -1,15 +1,9 @@
 
 package gamelogic;
 
-import gameObject.GameObject;
-import gameObject.GameObjects;
-import main.GamePanel;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 
 public class MouseInput extends MouseAdapter {

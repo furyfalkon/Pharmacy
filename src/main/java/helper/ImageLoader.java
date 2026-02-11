@@ -1,7 +1,8 @@
 package helper;
-
+import gameObject.*;
 import javax.swing.*;
 import java.awt.*;
+
 
 /**
  * Klasse zum Laden von Bildern

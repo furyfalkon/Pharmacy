@@ -12,19 +12,18 @@ import java.awt.event.ActionEvent;
  */
 public class GameLogic extends MouseInput{
 
-
-
     public static GameObjects update(GameObjects gameObjects, ActionEvent actionEvent){
-        System.out.println("started Updating");//Statusmeldung in der Konsole
+
+        //System.out.println("started Updating");//Statusmeldung in der Konsole
 
         /*
         * Interagieren mit ausgewählten GameObject
         * */
-       GameObject selectedGemeObject =mouseIsOnObjekt(gameObjects);
-        if (selectedGemeObject!=null){
-            System.out.println("in Objekt");
-            if (selectedGemeObject instanceof Storage) {
-                ((Storage) selectedGemeObject).interact(MouseInput.button, selectedGemeObject.getPositionX(),selectedGemeObject.getPositionY(),MouseInput.mouseX,MouseInput.mouseY);
+       GameObject selectedGameObject =mouseIsOnObjekt(gameObjects);
+        if (selectedGameObject!=null){
+           System.out.println("in Objekt");
+            if (selectedGameObject instanceof Storage) {
+               gameObjects= ((Storage) selectedGameObject).interact(gameObjects,MouseInput.button, selectedGameObject.getPositionX(),selectedGameObject.getPositionY(),MouseInput.mouseX,MouseInput.mouseY);
             }
 
         }
@@ -36,7 +35,7 @@ public class GameLogic extends MouseInput{
 
 
        gameObjects= Sorter.sortByLayers(gameObjects);
-       System.out.println("finished Updating");//Statusmeldung in der Konsole
+       //System.out.println("finished Updating");//Statusmeldung in der Konsole
         return gameObjects;
     }
 

@@ -1,5 +1,8 @@
 package maps;
 import gameObject.*;
+import gameObject.items.Drug;
+import gameObject.items.DrugColection;
+import gameObject.items.Item;
 import helper.ImageLoader;
 
 /**
@@ -37,20 +40,27 @@ public  class MapBuilder {
     private static GameObjects buildStorges(){
         GameObjects gameObjects=new GameObjects();
 
-        Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseLager",10,0,0,1,1);
-        mouseStorage.setVisible(false);
+        Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseStorage",10,0,0,1,1);
+        mouseStorage.setVisible(true);
+        mouseStorage.interactable=false;
         gameObjects.addGameObjekt(mouseStorage);
 
-        Storage playerInventory = new Storage(ImageLoader.loadImage("TempSprite.png"),"playerInventory",9,0,0,10,6);
+        Storage playerInventory = new Storage(ImageLoader.loadImage("TempSprite.png"),"playerInventory",9,0,0,2,2);
         playerInventory.setVisible(true);
+        Item testItem =new Drug(DrugColection.getCocain());
+        gameObjects.addGameObjekt(testItem);
+        playerInventory.setItem(testItem,0);
+        //playerInventory.updateItems();
         gameObjects.addGameObjekt(playerInventory);
 
-        Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainstorage",9,22*32,22*32,10,10);
-        mainstorage.setVisible(true);
+        Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainstorage",9,22*32,22*32,1,1);
+        mainstorage.setVisible(false);
+
         gameObjects.addGameObjekt(mainstorage);
 
         return gameObjects;
     }
+
 
 
 }

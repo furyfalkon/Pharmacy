@@ -12,23 +12,20 @@ public abstract class Item extends GameObject {
 
 
 
-    public Item(Image img,int layer ,String name, int basevalue, boolean craftable) {
-        super(img,false,layer,0,0,0,0);
-
-        sizeX = 0;
-        sizeY =0;
-        try {
-            sizeX= img.getWidth(null);
-            sizeY = img.getHeight(null);
-        }catch (Exception e){
-            throw e;
-        }
-
+    public Item(Image img ,String name, int basevalue, boolean craftable) {
+        super(img,false,0,0,0,32,32);
         this.name = name;
         this.basevalue = basevalue;
         this.craftable = craftable;
 
 
+    }
+
+    public Item(Item templateItem){
+        super(templateItem.getImg(),false,0,0,0,32,32);
+        this.name=templateItem.getName();
+        this.basevalue=templateItem.getBasevalue();
+        this.craftable=templateItem.craftable;
     }
 
     public String getName() {

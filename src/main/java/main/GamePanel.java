@@ -73,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        System.out.println("started Painting"); //Statusmeldung in der Konsole
+       // System.out.println("started Painting"); //Statusmeldung in der Konsole
 
         Graphics2D g2d= (Graphics2D) g;
 
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
            }
         }
 
-        System.out.println("finished Painting"); //Statusmeldung in der Konsole
+       // System.out.println("finished Painting"); //Statusmeldung in der Konsole
     }
 
     public GameObjects getPanelGameObjects() {

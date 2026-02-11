@@ -1,11 +1,13 @@
 package gameObject.items;
 
+import helper.ImageLoader;
+
 import java.awt.*;
 
 public class Ingredient extends Item{
 
-    public Ingredient(Image img,int layer,String name, int value) {
-        super(img,layer, name, value,false);
+    public Ingredient(Image img,String name, int value) {
+        super(img, name, value,false);
 
 
     }
@@ -22,7 +24,7 @@ public class Ingredient extends Item{
 
     public static class IngredientColection{
 
-        static Ingredient placeholder =new Ingredient(null,2,"This is a temporary Placeholder",1);
+        static Ingredient placeholder =new Ingredient(ImageLoader.loadImage("TempItem.png"),"This is a temporary Placeholder",1);
        static Ingredient[] cocainingredients ={placeholder};
 
 
