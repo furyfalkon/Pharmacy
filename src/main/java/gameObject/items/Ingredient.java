@@ -11,6 +11,9 @@ public class Ingredient extends Item{
 
 
     }
+    public Ingredient(Ingredient templeateIngredient){
+        super(templeateIngredient.getImg(),templeateIngredient.getName(),templeateIngredient.getBasevalue(),templeateIngredient.craftable);
+    }
 
     @Override
     public void buy(int amount) {

@@ -27,6 +27,12 @@ public void mouseMoved(MouseEvent e){
     mouseX=e.getX();
     mouseY=e.getY();
 }
+@Override
+public void mouseDragged(MouseEvent e){
+    mouseMoved=true;
+    mouseX=e.getX();
+    mouseY=e.getY();
+}
 
     public static void setMouseClicked(boolean mouseClicked) {
         MouseInput.mouseClicked = mouseClicked;

@@ -12,6 +12,8 @@ public abstract class Item extends GameObject {
 
 
 
+
+
     public Item(Image img ,String name, int basevalue, boolean craftable) {
         super(img,false,0,0,0,32,32);
         this.name = name;
@@ -39,6 +41,12 @@ public abstract class Item extends GameObject {
     public abstract void buy(int amount);
     
     public abstract void sell(int amount);
-        
-    
+
+    public boolean sameTypAs(Item item2){
+        if (this.name==item2.getName()){
+            return true;
+        }
+        return false;
+    }
+
 }

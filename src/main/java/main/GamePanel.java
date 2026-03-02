@@ -62,7 +62,6 @@ public class GamePanel extends JPanel implements Runnable {
             public void actionPerformed(ActionEvent actionEvent) {
                 allGameObjects =GameLogic.update(allGameObjects,actionEvent);
                 repaint();
-                MouseInfo.getPointerInfo().getLocation();
             }
         });
         t.start();
