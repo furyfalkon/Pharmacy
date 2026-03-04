@@ -14,9 +14,12 @@ public  abstract class GameObject {
     int positionY;
 
     public boolean interactable;//Interagierbarkeitsstatus
+    public boolean dragable;
     //Größe der "Hitbox" des Objektes
     public int ziseX;
     public int ziseY;
+
+    boolean childObject;
 
 
 
@@ -38,6 +41,8 @@ public  abstract class GameObject {
      this.ziseY =0;
      this.interactable=false;
      this.textToDisplay ="";
+     this.childObject =false;
+     this.dragable=false;
     }
 
     /**
@@ -59,6 +64,9 @@ public  abstract class GameObject {
         this.ziseX =sizeX;
         this.ziseY =sizeY;
         this.interactable=true;
+        this.textToDisplay="";
+        this.childObject =false;
+        this.dragable=false;
     }
 
     public Image getImg() {
@@ -136,5 +144,21 @@ public  abstract class GameObject {
 
     public void setZiseY(int ziseY) {
         this.ziseY = ziseY;
+    }
+
+    public boolean isChildObject() {
+        return childObject;
+    }
+
+    public void setChildObject(boolean childObject) {
+        this.childObject = childObject;
+    }
+
+    public boolean isDragable() {
+        return dragable;
+    }
+
+    public void setDragable(boolean dragable) {
+        this.dragable = dragable;
     }
 }

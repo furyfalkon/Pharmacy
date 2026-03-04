@@ -13,6 +13,7 @@ public class MouseInput extends MouseAdapter {
     public static int mouseY;
   public static boolean mouseClicked;
   public static  boolean mouseMoved;
+  public static boolean mouseDraged;
 @Override
     public void mouseClicked(MouseEvent e){
    button= e.getButton();
@@ -30,6 +31,7 @@ public void mouseMoved(MouseEvent e){
 @Override
 public void mouseDragged(MouseEvent e){
     mouseMoved=true;
+    mouseDraged=true;
     mouseX=e.getX();
     mouseY=e.getY();
 }
@@ -40,5 +42,9 @@ public void mouseDragged(MouseEvent e){
 
     public static void setMouseMoved(boolean mouseMoved) {
         MouseInput.mouseMoved = mouseMoved;
+    }
+
+    public static void setMouseDraged(boolean mouseDraged) {
+        MouseInput.mouseDraged = mouseDraged;
     }
 }

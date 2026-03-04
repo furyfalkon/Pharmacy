@@ -1,6 +1,5 @@
 package gameObject;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Klasse zum Verwalten und Speichern von GameObjekten
@@ -34,7 +33,7 @@ public class GameObjects  {
      * Methode zum Hinzufügen eines neuen GameObjektes zu einer bereits bestehenden Liste
      * @param gameObject neues Game Objekt
      */
-    public void addGameObjekt(GameObject gameObject){this.gameObjects.add(gameObject);}
+    public void addGameObject(GameObject gameObject){this.gameObjects.add(gameObject);}
 
     /**
      * Methode zum Hinzufügen einer Liste an GameObjekten zu einer bereits bestehenden Liste
@@ -46,9 +45,17 @@ public class GameObjects  {
         }
     }
 
-    public void setGameObjekt(GameObject gameObject,int pos){
+    public void setGameObject(GameObject gameObject, int pos){
         if (this.gameObjects.size()>pos){
             this.gameObjects.set(pos,gameObject);
+        }
+    }
+
+    public void removeGameObject(GameObject gameObject){
+        for (int i = 0; i <this.gameObjects.size(); i++) {
+          if(  this.gameObjects.get(i) ==gameObject){
+              this.gameObjects.set(i,null);
+          }
         }
     }
 

@@ -9,5 +9,6 @@ public interface Interactable {
      * @param button clicked button
      */
     public abstract GameObjects interact(GameObjects gameObjects,int button);
+
     public abstract GameObjects interact(GameObjects gameObjects,int button,int xPosObjekt,int yPosObjekt,int xMouse,int yMouse);
 }

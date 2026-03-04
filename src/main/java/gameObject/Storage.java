@@ -42,6 +42,27 @@ public class Storage extends GameObject implements Interactable {
     }
 
     /**
+     * Construktor für ein Lager
+     *
+     * @param colums    Spalten des Lagers
+     * @param rows      Zeilen des Lagers
+     * @param positionX Position der oberen Linken Ecke des Lagers (x-Koordinate)
+     * @param positionY Position der oberen Linken Ecke des Lagers (y-Koordinate)
+     */
+    public Storage(Image img, String name, int layer, int positionX, int positionY, int colums, int rows, boolean isChildObject) {
+        super(img, false, layer, positionX, positionY, colums * 32, rows * 32);
+        int Zise = rows * colums;
+        this.rows = rows;
+        this.colums = colums;
+        this.items = new Item[Zise];
+        this.items[0] = null;
+        this.name = name;
+        this.amount = new int[Zise];
+        this.amount[0] = 0;
+        setChildObject(isChildObject);
+    }
+
+    /**
      * alle items eines Lagers bekommen
      *
      * @return item Liste
@@ -246,12 +267,12 @@ public class Storage extends GameObject implements Interactable {
 
     @Override
     public GameObjects interact(GameObjects gameObjects) {
-        return null;
+        return gameObjects;
     }
 
     @Override
     public GameObjects interact(GameObjects gameObjects, int button) {
-        return null;
+        return gameObjects;
     }
 
     @Override

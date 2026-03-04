@@ -18,7 +18,7 @@ public  class MapBuilder {
     public  static GameObjects buildMap(GameObjects gameObjects){
        gameObjects.addGameObjekts(buildBackgrounds());
         gameObjects.addGameObjekts(buildStorges());
-
+        gameObjects.addGameObjekts(buildMenus());
 
 
         return gameObjects;
@@ -29,7 +29,7 @@ public  class MapBuilder {
         GameObjects gameObjects=new GameObjects();
         
         Background tempBackground =new Background( ImageLoader.loadImage("Räume/","Wohnzimmer.png",2));
-        gameObjects.addGameObjekt(tempBackground);
+        gameObjects.addGameObject(tempBackground);
 
         return gameObjects;
     }
@@ -44,25 +44,39 @@ public  class MapBuilder {
         Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseStorage",10,0,0,1,1);
         mouseStorage.setVisible(true);
         mouseStorage.interactable=false;
-        gameObjects.addGameObjekt(mouseStorage);
+        gameObjects.addGameObject(mouseStorage);
 
         Storage playerInventory = new Storage(ImageLoader.loadImage("InvSlot.png"),"playerInventory",9,64,0,10,5);
-        playerInventory.setImg(ImageLoader.tileImage("InvSlot.png",playerInventory.getColums(),playerInventory.getRows()));
+        playerInventory.setImg(ImageLoader.loadTiledImage("InvSlot.png",playerInventory.getColums(),playerInventory.getRows()));
         playerInventory.setVisible(true);
         Item testItem =new Drug(DrugColection.getCocain());
-      //  gameObjects.addGameObjekt(testItem);
         playerInventory.setItem(testItem,0);
-        playerInventory.setAmount(0,2);
-        gameObjects.addGameObjekt(playerInventory);
+        playerInventory.setAmount(0,3);
+        gameObjects.addGameObject(playerInventory);
 
 
 
         Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainstorage",9,22*32,22*32,10,9);
-        mainstorage.setImg(ImageLoader.tileImage("InvSlot.png",mainstorage.getColums(),mainstorage.getRows()));
+        mainstorage.setImg(ImageLoader.loadTiledImage("InvSlot.png",mainstorage.getColums(),mainstorage.getRows()));
         mainstorage.setVisible(true);
 
-        gameObjects.addGameObjekt(mainstorage);
+        gameObjects.addGameObject(mainstorage);
 
+        return gameObjects;
+    }
+
+    private static GameObjects buildMenus(){
+        GameObjects gameObjects=new GameObjects();
+        GameObjects ChildGameObjects=new GameObjects();
+
+        TempObject temp1 = new TempObject(true,1,0,0);
+        ChildGameObjects.addGameObject(temp1);
+        TempObject temp2 = new TempObject(true,1,32,32);
+        ChildGameObjects.addGameObject(temp2);
+
+        Menu menu =new Menu(ImageLoader.loadImage("emty.png"),true,10,10,256,100,100,ChildGameObjects);
+
+        gameObjects.addGameObject(menu);
         return gameObjects;
     }
 

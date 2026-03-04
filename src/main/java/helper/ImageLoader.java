@@ -1,5 +1,4 @@
 package helper;
-import gameObject.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -63,7 +62,7 @@ public class ImageLoader {
         return scaledImg;
     }
 
-    public static Image tileImage(String filename, int colums , int rows){
+    public static Image loadTiledImage(String filename, int colums , int rows){
        Image tiledImage =loadImage(filename+"Tiled-"+colums+"x"+rows+".png");
        if (tiledImage.getWidth(null)==-1){
         Image image = new ImageIcon("resources/"+filename).getImage();
@@ -82,8 +81,6 @@ public class ImageLoader {
             ImageIO.write( tiledBufferedImage, "PNG", f );
         }
         catch ( IOException x ) {
-            // Complain if there was any problem writing
-            // the output file.
             x.printStackTrace();
         }
 
