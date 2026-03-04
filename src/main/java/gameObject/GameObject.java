@@ -5,6 +5,7 @@ import java.awt.*;
 public  abstract class GameObject {
 
     Image img;//Bild des GameObjektes
+    String textToDisplay;
     boolean visible;//Sichtbarkeitsstatus
     int layer;//Layer in dem sas Bild gezeichnet wird, wenn es sichtbar ist(0 unten)
 
@@ -17,7 +18,7 @@ public  abstract class GameObject {
     public int ziseX;
     public int ziseY;
 
-    String textToDisplay;
+
 
     /**
      * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
@@ -127,5 +128,13 @@ public  abstract class GameObject {
 
     public void setLayer(int layer) {
         this.layer = layer;
+    }
+
+    public void setZiseX(int ziseX) {
+        this.ziseX = ziseX;
+    }
+
+    public void setZiseY(int ziseY) {
+        this.ziseY = ziseY;
     }
 }

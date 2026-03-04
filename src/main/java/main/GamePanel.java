@@ -100,8 +100,4 @@ public class GamePanel extends JPanel implements Runnable {
 
        // System.out.println("finished Painting"); //Statusmeldung in der Konsole
     }
-
-    public GameObjects getPanelGameObjects() {
-        return allGameObjects;
-    }
 }
