@@ -6,7 +6,7 @@ import gameObject.GameObject;
 import gameObject.GameObjects;
 import gamelogic.GameLogic;
 import gamelogic.MouseInput;
-import maps.MapBuilder;
+import maps.MainRoom;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
 
         allGameObjects =new GameObjects();//Legt die GameObjekt Liste an
-        allGameObjects = MapBuilder.buildMap(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
+        allGameObjects = MainRoom.buildMap(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
 
         /**
          * Game Loop (Update -> repaint -> Pause)

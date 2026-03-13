@@ -1,8 +1,9 @@
 package gamelogic;
 
 import gameObject.*;
-import gameObject.Button;
 import gameObject.Menu;
+import gameObject.butons.Button;
+import gameObject.butons.VisibilityToggler;
 import helper.Sorter;
 
 import java.awt.*;
@@ -28,6 +29,11 @@ public class GameLogic extends MouseInput{
                if (selectedGameObject instanceof Storage) {
                    gameObjects = ((Storage) selectedGameObject).interact(gameObjects, MouseInput.button, selectedGameObject.getPositionX(), selectedGameObject.getPositionY(), MouseInput.mouseX, MouseInput.mouseY);
                }
+
+                   if (selectedGameObject instanceof VisibilityToggler){
+                       gameObjects = ((VisibilityToggler) selectedGameObject).interact(gameObjects);
+                   }
+
                MouseInput.setMouseClicked(false);
            }
         }
@@ -49,7 +55,7 @@ public class GameLogic extends MouseInput{
     /**
      * Methode zum Prüfen, ob die Maus auf einem sichtbaren Objekt ist (mit diesem Interagieren kann)
      * dabei werden alle Game Objekte durchsucht bis ein passendes objekt gefunden wurde oder alle geprüft wurden
-     * Deshalb ist es wichtig, dass die "Hitboxen" von objekten sich nicht überlagern, wenn diese beide Sichtbar sind!!!
+     * Deshalb ist es wichtig, dass die "Hitboxen" von objekten sich nicht überlagern, wenn diese beide Sichtbar sind und in der gleichen ebne sind!!!
      * @param gameObjects Liste der zu prüfenden Game Objekte
      * @return
      */
@@ -145,93 +151,25 @@ public class GameLogic extends MouseInput{
             }
             }
         }
-
-
         for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
             GameObject aktiveGameObject = gameObjects.getGameObjects().get(i);
 
 
             if (aktiveGameObject instanceof Storage) {
-               gameObjects= updateStorage(gameObjects,aktiveGameObject);
+               gameObjects=  ((Storage) aktiveGameObject).updateStorage(gameObjects);
             }
 
             if (aktiveGameObject instanceof Menu){
-                gameObjects=updateMenu(gameObjects,aktiveGameObject);
-            }
-        }
-
-
-
-        return gameObjects;
-    }
-
-
-    private static GameObjects updateStorage(GameObjects gameObjects, GameObject aktiveGameObject){
-        Storage aktiveStorage = (Storage) aktiveGameObject;
-        for (int j = 0; j < aktiveStorage.getItems().length; j++) {
-            if (aktiveStorage.getItems()[j]!=null){
-                Point localItemCoordinates = aktiveStorage.getLocalItemCoordinates(j);
-                int absoluteItemPositionX = localItemCoordinates.x + aktiveStorage.getPositionX();
-                int absoluteItemPositionY = localItemCoordinates.y + aktiveStorage.getPositionY();
-                aktiveStorage.getItems()[j].setPositionX(absoluteItemPositionX);
-                aktiveStorage.getItems()[j].setPositionY(absoluteItemPositionY);
-                aktiveStorage.getItems()[j].setLayer(aktiveStorage.getLayer() + 1);
-                aktiveStorage.getItems()[j].setVisible(aktiveStorage.isVisible());
-                aktiveStorage.getItems()[j].setTextToDisplay(aktiveStorage.getAmounts()[j] + "");
-                gameObjects.addGameObject(aktiveStorage.getItems()[j]);}
-        }
-        return gameObjects;
-    }
-
-    private static GameObjects updateMenu(GameObjects gameObjects, GameObject aktiveGameObject){
-        Menu aktiveMenu = (Menu) aktiveGameObject;
-        GameObjects aktiveMenuGameObjects = aktiveMenu.getMenuGameObjects();
-        for (int j = 0; j <aktiveMenuGameObjects.getGameObjects().size(); j++) {
-            GameObject aktiveChildGameObject = aktiveMenuGameObjects.getGameObjects().get(j);
-            int absoluteChildObjectPositionX =aktiveMenu.getPositionX()+aktiveChildGameObject.getPositionX();
-            int absoluteChildObjectPositionY =aktiveMenu.getPositionY()+aktiveChildGameObject.getPositionY();
-            int absoluteChildObjectLayer= aktiveMenu.getLayer()+aktiveChildGameObject.getLayer();
-            boolean absoluteChildObjectVisibility=false;
-            if (aktiveMenu.isVisible()){
-                if (aktiveChildGameObject.isVisible()){
-                    absoluteChildObjectVisibility=true;
-                }
-            }
-            GameObject globalChildGameObject = null;
-            if (aktiveChildGameObject!= null){
-            Image img =aktiveChildGameObject.getImg();
-            if (aktiveChildGameObject instanceof Background){
-                globalChildGameObject= new Background(img);
-            }
-            if (aktiveChildGameObject instanceof Button){
-                globalChildGameObject =new Button(img,false,0,0,0,0,0,false);
-            }
-            if (aktiveChildGameObject instanceof Storage){
-                globalChildGameObject =new Storage(img,((Storage) aktiveChildGameObject).getName(),1,0,0,((Storage) aktiveChildGameObject).getColums(),((Storage) aktiveChildGameObject).getRows());
-                ((Storage) globalChildGameObject).setItems(((Storage) aktiveChildGameObject).getItems());
-                ((Storage) globalChildGameObject).setAmounts(((Storage) aktiveChildGameObject).getAmounts());
-            }
-            if (aktiveChildGameObject instanceof TempObject){
-                globalChildGameObject = new TempObject(false,0,0,0);
-            }}
-
-
-
-            if (globalChildGameObject != null){
-            globalChildGameObject.setPositionX(absoluteChildObjectPositionX);
-            globalChildGameObject.setPositionY(absoluteChildObjectPositionY);
-            globalChildGameObject.setLayer(absoluteChildObjectLayer);
-            globalChildGameObject.setVisible(absoluteChildObjectVisibility);
-            globalChildGameObject.setChildObject(true);
-            gameObjects.addGameObject(globalChildGameObject);
-                if (globalChildGameObject instanceof Storage){
-                    gameObjects=((Storage) globalChildGameObject).updateStorage(gameObjects);
-                    gameObjects=updateStorage(gameObjects,globalChildGameObject);
-                }
+                gameObjects=((Menu)aktiveGameObject).updateMenu(gameObjects);
             }
         }
         return gameObjects;
     }
+
+
+
+
+
 
 
 

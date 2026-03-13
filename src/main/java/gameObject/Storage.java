@@ -5,6 +5,7 @@ import gameObject.items.Ingredient;
 import gameObject.items.Item;
 
 import java.awt.*;
+import java.util.Objects;
 
 
 /**
@@ -13,50 +14,50 @@ import java.awt.*;
 public class Storage extends GameObject implements Interactable {
 
     Item[] items; //Liste aller Items im Lager
-    int amount[];//Liste der mengen der Items
-    int colums;//Spalten des Lagers
+    int[] amount;//Liste der mengen der Items
+    int columns;//Spalten des Lagers
     int rows;//Zeilen des Lagers
 
     String name;
 
 
     /**
-     * Construktor für ein Lager
+     * Constructor für ein Lager
      *
-     * @param colums    Spalten des Lagers
+     * @param columns    Spalten des Lagers
      * @param rows      Zeilen des Lagers
      * @param positionX Position der oberen Linken Ecke des Lagers (x-Koordinate)
      * @param positionY Position der oberen Linken Ecke des Lagers (y-Koordinate)
      */
-    public Storage(Image img, String name, int layer, int positionX, int positionY, int colums, int rows) {
-        super(img, false, layer, positionX, positionY, colums * 32, rows * 32);
-        int Zise = rows * colums;
+    public Storage(Image img, String name, int layer, int positionX, int positionY, int columns, int rows) {
+        super(img, false, layer, positionX, positionY, columns * 32, rows * 32);
+        int size = rows * columns;
         this.rows = rows;
-        this.colums = colums;
-        this.items = new Item[Zise];
+        this.columns = columns;
+        this.items = new Item[size];
         this.items[0] = null;
         this.name = name;
-        this.amount = new int[Zise];
+        this.amount = new int[size];
         this.amount[0] = 0;
     }
 
     /**
-     * Construktor für ein Lager
+     * Constructor für ein Lager
      *
-     * @param colums    Spalten des Lagers
+     * @param columns    Spalten des Lagers
      * @param rows      Zeilen des Lagers
      * @param positionX Position der oberen Linken Ecke des Lagers (x-Koordinate)
      * @param positionY Position der oberen Linken Ecke des Lagers (y-Koordinate)
      */
-    public Storage(Image img, String name, int layer, int positionX, int positionY, int colums, int rows, boolean isChildObject) {
-        super(img, false, layer, positionX, positionY, colums * 32, rows * 32);
-        int Zise = rows * colums;
+    public Storage(Image img, String name, int layer, int positionX, int positionY, int columns, int rows, boolean isChildObject) {
+        super(img, false, layer, positionX, positionY, columns * 32, rows * 32);
+        int size = rows * columns;
         this.rows = rows;
-        this.colums = colums;
-        this.items = new Item[Zise];
+        this.columns = columns;
+        this.items = new Item[size];
         this.items[0] = null;
         this.name = name;
-        this.amount = new int[Zise];
+        this.amount = new int[size];
         this.amount[0] = 0;
         setChildObject(isChildObject);
     }
@@ -124,12 +125,12 @@ public class Storage extends GameObject implements Interactable {
     }
 
 
-    public int getColums() {
-        return colums;
+    public int getColumns() {
+        return columns;
     }
 
-    public void setColums(int colums) {
-        this.colums = colums;
+    public void setColumns(int columns) {
+        this.columns = columns;
     }
 
     public int getRows() {
@@ -161,7 +162,7 @@ public class Storage extends GameObject implements Interactable {
         for (int i = 0; i < targetStorage.items.length; i++) {
             if (targetStorage.items[i] == sourceStorage.items[pos]) {
                 targetStorage.amount[i] = targetStorage.amount[i] + sourceStorage.amount[pos];
-                emtyPos(sourceStorage, pos);
+                emptyPos(sourceStorage, pos);
                 gameObjects = sourceStorage.updateStorage(gameObjects);
                 gameObjects = sourceStorage.updateStorage(gameObjects);
 
@@ -172,7 +173,7 @@ public class Storage extends GameObject implements Interactable {
             if (targetStorage.items[i] == null) {
                 targetStorage.items[i] = sourceStorage.items[pos];
                 targetStorage.amount[i] = sourceStorage.amount[pos];
-                emtyPos(sourceStorage, pos);
+                emptyPos(sourceStorage, pos);
                 gameObjects = sourceStorage.updateStorage(gameObjects);
                 gameObjects = sourceStorage.updateStorage(gameObjects);
 
@@ -208,7 +209,7 @@ public class Storage extends GameObject implements Interactable {
                 sourceStorage.amount[sourcePos]--;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
-                emtyPos(sourceStorage, sourcePos);
+                emptyPos(sourceStorage, sourcePos);
             }
         } else if (ziehlStorage.items[ziehlPos].sameTypAs(sourceStorage.items[sourcePos])) {
             if (sourceStorage.amount[sourcePos] > 0) {
@@ -216,7 +217,7 @@ public class Storage extends GameObject implements Interactable {
                 sourceStorage.amount[ziehlPos]--;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
-                emtyPos(sourceStorage, sourcePos);
+                emptyPos(sourceStorage, sourcePos);
             }
         }
 
@@ -251,7 +252,7 @@ public class Storage extends GameObject implements Interactable {
                 sourceStorage.amount[sourcePos] = 0;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
-                emtyPos(sourceStorage, sourcePos);
+                emptyPos(sourceStorage, sourcePos);
             }
         }else if (ziehlStorage.items[ziehlPos].sameTypAs( sourceStorage.items[sourcePos]) ){//Prüfen, ob der ausgewählte Zielslot das einzulagernde Item Enthält
             if (sourceStorage.amount[sourcePos] > 0) {
@@ -259,7 +260,7 @@ public class Storage extends GameObject implements Interactable {
                 sourceStorage.amount[sourcePos] = 0;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
-                emtyPos(sourceStorage, sourcePos);
+                emptyPos(sourceStorage, sourcePos);
             }
         }
 
@@ -283,12 +284,13 @@ public class Storage extends GameObject implements Interactable {
 
     @Override
     public GameObjects interact(GameObjects gameObjects, int button, int xPosObjekt, int yPosObjekt, int xMouse, int yMouse) {
-        int colums = this.getColums();
+        int columns = this.getColumns();
         int xrelativeMousePosition = xMouse - xPosObjekt;
         int yrelativeMousePosition = yMouse - yPosObjekt;
-        int mousePos = getMousePos(colums, xrelativeMousePosition, yrelativeMousePosition);
+        int mousePos = getMousePos(columns, xrelativeMousePosition, yrelativeMousePosition);
         System.out.println("Mouse in Position " + mousePos);
         Storage mouseStorage = getMouseStorage(gameObjects);
+        assert mouseStorage != null;
         if (mouseStorage.getItem(0) != null && mouseStorage.getAmount(0) != 0) {
             //Linke Maustaste
             if (button == 1) {
@@ -299,7 +301,7 @@ public class Storage extends GameObject implements Interactable {
                 gameObjects = addOneItem(gameObjects, mouseStorage, this, 0, mousePos);
             }
         } else {
-            System.out.println("Mouse Storage Emty");
+            System.out.println("Mouse Storage empty");
             //Linke Maustaste
             if (button == 1) {
                 gameObjects = addItems(gameObjects, this, mouseStorage, mousePos, 0);
@@ -320,24 +322,22 @@ public class Storage extends GameObject implements Interactable {
      * @param storage lager in welchem ein slott gelert werden soll
      * @param pos     position die gelert werden soll
      */
-    private void emtyPos(Storage storage, int pos) {
+    private void emptyPos(Storage storage, int pos) {
         storage.amount[pos] = 0;
         storage.items[pos] = null;
     }
 
-    private int getMousePos(int Colums, int xrelativeMousePosition, int yrelativeMousePosition) {
-        int activeRow = yrelativeMousePosition / 32;
-        int activeColum = xrelativeMousePosition / 32;
-        int position = activeColum + activeRow * Colums;
-        return position;
+    private int getMousePos(int columns, int xRelativeMousePosition, int yRelativeMousePosition) {
+        int activeRow = yRelativeMousePosition / 32;
+        int activeColum = xRelativeMousePosition / 32;
+        return activeColum + activeRow * columns;
     }
 
     public static Storage getMouseStorage(GameObjects gameObjects) {
         for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
             if (gameObjects.getGameObjects().get(i) instanceof Storage) {
-                if (((Storage) gameObjects.getGameObjects().get(i)).name == "mouseStorage") {
-                    Storage mouseStorage = ((Storage) gameObjects.getGameObjects().get(i));
-                    return mouseStorage;
+                if (Objects.equals(((Storage) gameObjects.getGameObjects().get(i)).name, "mouseStorage")) {
+                    return ((Storage) gameObjects.getGameObjects().get(i));
                 }
             }
         }
@@ -345,36 +345,40 @@ public class Storage extends GameObject implements Interactable {
     }
 
 
-    public GameObjects updateStorage(GameObjects gameObjects) {
+    public GameObjects updateStorage(GameObjects gameObjects){
         Storage aktiveStorage = this;
         for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
             if (gameObjects.getGameObjects().get(i) instanceof Storage) {
-                if (((Storage) gameObjects.getGameObjects().get(i)).name == aktiveStorage.name) {
-                    gameObjects.getGameObjects().set(i, this);
+                if (Objects.equals(((Storage) gameObjects.getGameObjects().get(i)).getName(), aktiveStorage.getName())) {
+                    gameObjects.getGameObjects().set(i, aktiveStorage);
                 }
             }
+        }
+
+        for (int j = 0; j < aktiveStorage.getItems().length; j++) {
+            if (aktiveStorage.getItems()[j]!=null){
+                Point localItemCoordinates = aktiveStorage.getLocalItemCoordinates(j);
+                int absoluteItemPositionX = localItemCoordinates.x + aktiveStorage.getPositionX();
+                int absoluteItemPositionY = localItemCoordinates.y + aktiveStorage.getPositionY();
+                aktiveStorage.getItems()[j].setPositionX(absoluteItemPositionX);
+                aktiveStorage.getItems()[j].setPositionY(absoluteItemPositionY);
+                aktiveStorage.getItems()[j].setLayer(aktiveStorage.getLayer() + 1);
+                aktiveStorage.getItems()[j].setVisible(aktiveStorage.isVisible());
+                aktiveStorage.getItems()[j].setTextToDisplay(aktiveStorage.getAmounts()[j] + "");
+                gameObjects.addGameObject(aktiveStorage.getItems()[j]);}
         }
         return gameObjects;
     }
 
     public Point getLocalItemCoordinates(int pos) {
         int tileZise = 32;
-        int colums = this.getColums();
+        int colums = this.getColumns();
         int row = pos / colums;
         int colum = pos % colums;
         int posX = colum * tileZise;
         int posY = row * tileZise;
-        Point point = new Point(posX, posY);
-        return point;
+        return new Point(posX, posY);
     }
-
-
-
-
-
-
-
-
 }
 
 

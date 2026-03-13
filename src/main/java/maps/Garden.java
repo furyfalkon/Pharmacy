@@ -8,6 +8,5 @@ public class Garden extends Map {
     }
 
     public void plant(int plant, int x, int y) {
-
     }
 }

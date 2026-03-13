@@ -22,8 +22,6 @@ public  abstract class GameObject {
 
     boolean childObject;
 
-    String uniqueId;
-
     /**
      * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
      * @param img
@@ -44,7 +42,6 @@ public  abstract class GameObject {
      this.textToDisplay ="";
      this.childObject =false;
      this.dragable=false;
-     this.uniqueId="Time Created" +System.nanoTime();
     }
 
     /**
@@ -69,7 +66,6 @@ public  abstract class GameObject {
         this.textToDisplay="";
         this.childObject =false;
         this.dragable=false;
-        this.uniqueId="Time Created" +System.nanoTime();
     }
 
 

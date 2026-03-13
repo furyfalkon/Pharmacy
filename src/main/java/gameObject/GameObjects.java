@@ -53,7 +53,7 @@ public class GameObjects  {
 
     public GameObjects updateGameObject(GameObject gameObject){
         for (int i = 0; i <this.gameObjects.size(); i++) {
-          if(  this.gameObjects.get(i).uniqueId==gameObject.uniqueId){
+          if(  this.gameObjects.get(i)==gameObject){
               this.gameObjects.set(i,gameObject);
           }
         }
