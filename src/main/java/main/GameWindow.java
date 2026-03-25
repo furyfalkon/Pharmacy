@@ -1,6 +1,8 @@
 package main;
 import gamelogic.KeyInput;
 import helper.ImageLoader;
+import maps.Kitchen;
+import maps.MainRoom;
 
 import javax.swing.*;
 
@@ -11,6 +13,9 @@ public class GameWindow {
     /**
      * Methode zum Öffnen des Fensters
      */
+
+    public static GamePanel mainGamePanel;
+    public static GamePanel kitchenGamePanel;
     public static void openWindow(){
 
     JFrame window = new JFrame(); //Erstellen des Fensters als JFrame
@@ -23,13 +28,17 @@ public class GameWindow {
         window.requestFocus();                                              //Fragt fokus an (wichtig für KeyListener)
         window.addKeyListener(new KeyInput());                              //Key Listener wid Hinzugefügt
 
-    GamePanel gamePanel;                                                    //Game Panel wird erstellt
-    gamePanel =new GamePanel();
-            window.add(gamePanel);                                          //und dem Fenster hinzugefügt
-            window.pack();
+                                                      //Game Panel wird erstellt
+    mainGamePanel =new GamePanel();
+    mainGamePanel.build(MainRoom.buildMap());
+    mainGamePanel.setVisible(true);
+        window.add(mainGamePanel);                   //und dem Fenster hinzugefügt
+        window.pack();
+
+
 
         window.setLocationRelativeTo(null);                                 // die Position des Fensters wird festgelegt
         window.setVisible(true);                                            // und es wird sichtbar gemacht
 
-        gamePanel.run();}                                                   //das start GamePanel wird ausgeführt
+        mainGamePanel.run();}                                                   //das start GamePanel wird ausgeführt
 }

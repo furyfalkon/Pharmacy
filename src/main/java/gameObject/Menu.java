@@ -85,6 +85,9 @@ public class Menu extends  GameObject  {
                 if (aktiveChildGameObject instanceof TempObject){
                     globalChildGameObject = new TempObject(false,0,0,0);
                 }
+                if (aktiveChildGameObject instanceof Menu){
+                    globalChildGameObject =new Menu(aktiveChildGameObject.getImg(),false,0,0,0,0,0,((Menu) aktiveChildGameObject).getMenuGameObjects());
+                }
 
             //Wen das globale child Game Objekt erfolgreich initialisiert wurde und nicht mehr null ist
             if (globalChildGameObject != null){

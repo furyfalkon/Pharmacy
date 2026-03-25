@@ -1,10 +1,11 @@
 package maps;
 import gameObject.*;
-import gameObject.butons.VisibilityToggler;
+import gameObject.butons.*;
 import gameObject.items.Drug;
 import gameObject.items.DrugColection;
 import gameObject.items.Item;
 import helper.ImageLoader;
+import main.GameWindow;
 
 
 /**
@@ -13,15 +14,24 @@ import helper.ImageLoader;
 public  class MainRoom implements MapBuilder{
     /**
      * Methode zum Bauen (Initialisation) des HauptRaumes
-     * @param gameObjects Liste aller Gameobjekte der aktuellen Karte
      * @return Liste aller Gameobjekte nach dem Bauen (Initialisieren) der Karte
      */
-    public static GameObjects buildMap(GameObjects gameObjects){
-       gameObjects.addGameObjects(buildBackgrounds());
-       gameObjects.addGameObjects(buildDecoration());
-        gameObjects.addGameObjects(buildStorages());
-        gameObjects.addGameObjects(buildMenus());
+    public static GameObjects buildMap(){
+        GameObjects gameObjects =new GameObjects();
+        GameObjects menuGameObjects=new GameObjects();
+        menuGameObjects.addGameObjects(buildBackgrounds());
+        menuGameObjects.addGameObjects(buildDecoration());
 
+        menuGameObjects.addGameObjects(buildMenus());
+        Menu mainPanel= new Menu(ImageLoader.loadImage("empty.png"),true,1,0,0,0,0,menuGameObjects);
+        Menu garden =new Menu(ImageLoader.loadImage("emty.png"),false,1,0,0,0,0,menuGameObjects);
+        GameObjects panels =new GameObjects();
+        panels.addGameObject(mainPanel);
+        panels.addGameObject(garden);
+      VisibilitySwitcher panelSwitcher =new VisibilitySwitcher(ImageLoader.loadImage("Räume/Türen/","Tür2.png",0.2),true,10,400,100,100,100,false,panels);
+        mainPanel.addMenuGameObject(panelSwitcher);
+        gameObjects.addGameObject(mainPanel);
+        gameObjects.addGameObjects(buildStorages());
         return gameObjects;
     }
 
@@ -92,8 +102,9 @@ public  class MainRoom implements MapBuilder{
         gameObjects.addGameObject(storageMenu);
 
         //Truhe/Button zum Öffnen des Hauptinventars erstellen
-        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",0.04),true,10,100,500,64,64,false,storageMenu);
+        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Truhe3D_60x60.png",1.5),true,10,100,500,90,90,false,storageMenu);
         gameObjects.addGameObject(visibilityTogglerMainStorage2);
+
 
         return gameObjects;
     }
@@ -109,11 +120,6 @@ public  class MainRoom implements MapBuilder{
         TempObject tempObject=new TempObject(true,10,320,600);
         tempObject.setImg(ImageLoader.loadImage("Tisch.png"));
         gameObjects.addGameObject(tempObject);
-
-
-        TempObject tempObject1=new TempObject(true,10,420,226);
-        tempObject1.setImg(ImageLoader.loadImage("Tür.png"));
-        gameObjects.addGameObject(tempObject1);
         return gameObjects;
     }
 

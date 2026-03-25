@@ -1,6 +1,8 @@
 package maps;
 
-public class Garden extends Map {
+public class Garden extends Map implements MapBuilder {
+
+
 
     public Garden() {
         super();

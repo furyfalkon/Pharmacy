@@ -27,7 +27,7 @@ public  abstract class GameObject {
     boolean childObject;
 
     /**
-     * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
+     * Constructor für ein GameObjekt, mit dem nicht interagiert werden kann
      * @param img  Das darzustellende Bild
      * @param visible  der Sichtbarkeitsstatus
      * @param layer    die Anzeigeebene

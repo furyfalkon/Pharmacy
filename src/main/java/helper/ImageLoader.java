@@ -1,6 +1,6 @@
 package helper;
 
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -44,8 +44,10 @@ public class ImageLoader {
         Image image = new ImageIcon("resources/"+filename).getImage();
         double h =image.getHeight(null);
         double w= image.getWidth(null);
-       Image scaledImg = image.getScaledInstance((int) (w*scalingFaktor), (int) (h*scalingFaktor),Image.SCALE_DEFAULT);
-        return scaledImg;
+        int X = (int) (w*scalingFaktor);
+        int Y = (int) (h*scalingFaktor);
+       Image scaledImg = image.getScaledInstance(X,Y,Image.SCALE_DEFAULT);
+        return(Image) scaledImg;
     }
 
     /**

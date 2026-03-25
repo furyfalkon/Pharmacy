@@ -1,6 +1,7 @@
 package gamelogic;
 import gameObject.*;
 import gameObject.Menu;
+import gameObject.butons.VisibilitySwitcher;
 import gameObject.butons.VisibilityToggler;
 import helper.Sorter;
 import java.awt.*;
@@ -47,6 +48,10 @@ public class GameLogic extends MouseInput{
                     //Interagieren+ übergabe der aktuellen game Objekte
                     gameObjects = ((VisibilityToggler) selectedGameObject).interact(gameObjects);
                     }
+                    if (selectedGameObject instanceof VisibilitySwitcher){
+                        gameObjects=((VisibilitySwitcher) selectedGameObject).interact(gameObjects);
+                    }
+
 
 
                 //Mouse Clicked wieder au falsch setzen
@@ -259,24 +264,31 @@ public class GameLogic extends MouseInput{
        for (int i = 0; i <gameObjects.getSize(); i++) {           //alle GameObjekte durchgehen
             GameObject aktiveGameObject =gameObjects.getGameObject(i);   //das aktive GameObjekt setzen
             if (aktiveGameObject instanceof Menu){                              //das aktuelle Game Objekt ist ein Menü
-                if (((Menu) aktiveGameObject).getMenuGameObjects()!=null){      //die ChildGameObjekte des Menüs sind nicht null
-
-                    //die ChildGameObjekte durchgehen
-                    for (int j = 0; j <((Menu) aktiveGameObject).getMenuGameObjects().getSize(); j++) {
-                        //das aktive ChildGameObjekt setzen
-                         GameObject childObject =((Menu) aktiveGameObject).getMenuGameObjects().getGameObject(j);
-                         if (childObject instanceof Storage){   //das aktive ChildGameObjekt ist ein Lager
-                             if (((Storage) childObject).getName().equals("playerInventory")){ //das aktive ChildGameObjekt ist das SpielerInventar
-                                 aktiveGameObject.setVisible(true); //das Menü sichtbar machen
-
-                             }
-                         }
-                    }
-                    gameObjects.updateGameObject(aktiveGameObject);  // das aktuelle GameObjekt updaten
-                }
+               checkMenu(gameObjects, (Menu) aktiveGameObject);
             }
        }
         return gameObjects;     // Die geupdateten Gameobjekte zurückgeben
+   }
+
+   public static GameObjects checkMenu(GameObjects gameObjects,Menu aktiveGameObject){
+       if (((Menu) aktiveGameObject).getMenuGameObjects()!=null){      //die ChildGameObjekte des Menüs sind nicht null
+           //die ChildGameObjekte durchgehen
+           for (int j = 0; j <((Menu) aktiveGameObject).getMenuGameObjects().getSize(); j++) {
+               //das aktive ChildGameObjekt setzen
+               GameObject childObject =((Menu) aktiveGameObject).getMenuGameObjects().getGameObject(j);
+               if (childObject instanceof Storage){   //das aktive ChildGameObjekt ist ein Lager
+                   if (((Storage) childObject).getName().equals("playerInventory")){ //das aktive ChildGameObjekt ist das SpielerInventar
+                       aktiveGameObject.setVisible(true); //das Menü sichtbar machen
+
+                   }
+               }
+               if (childObject instanceof Menu){
+                  checkMenu(gameObjects, (Menu) childObject);
+               }
+           }
+           gameObjects.updateGameObject(aktiveGameObject);  // das aktuelle GameObjekt updaten
+       }
+       return gameObjects;
    }
     /**
      * Methode zum Schließen/unsichtbar machen aller Menüs

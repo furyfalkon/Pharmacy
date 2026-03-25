@@ -16,7 +16,7 @@ import java.awt.font.TextLayout;
 public class GamePanel extends JPanel implements Runnable {
     GameObjects allGameObjects; //liste aller gameObjekt im aktuellen gamePanel
     /**
-     * Das Feld wird in Tiles unterteilt um Sicherzustellen,
+     * Das Feld wird in Tiles unterteilt, um Sicherzustellen,
      * dass die Gesamtauflösung ein Vielfaches der Tile size ist und somit das tilen von Objekten der Standard Auflösung möglich ist
      */
     final int TileSize = 32;// größe der Tiles
@@ -46,10 +46,6 @@ public class GamePanel extends JPanel implements Runnable {
      */
     @Override
     public void run() {
-
-        allGameObjects =new GameObjects();//Legt die GameObjekt Liste an
-        allGameObjects = MainRoom.buildMap(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
-
         /*
          * Game Loop (Update -> repaint -> Pause)
          */
@@ -59,6 +55,11 @@ public class GamePanel extends JPanel implements Runnable {
         });
         t.start();
 
+    }
+
+    public void build(GameObjects gameObjects){
+        allGameObjects =new GameObjects();//Legt die GameObjektListe an
+        this.allGameObjects =gameObjects; //Baut die Map (Initialisiert die GameObjektListe)
     }
 
     /**

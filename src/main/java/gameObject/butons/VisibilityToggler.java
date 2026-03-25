@@ -2,6 +2,7 @@ package gameObject.butons;
 
 import gameObject.GameObject;
 import gameObject.GameObjects;
+import main.GamePanel;
 
 import java.awt.*;
 
@@ -9,7 +10,8 @@ import java.awt.*;
  * Ein Sichtbarkeitsschalter zum Ändern der Sichtbarkeit eines bestimmten objektes als spezieller Button
  */
 public class VisibilityToggler extends Button {
-    GameObject gameObjectToToggleVisibility;    //das Objekt dessen Sichtbarkeit geändert wird
+    GameObject gameObjectToToggleVisibility;//das Objekt dessen Sichtbarkeit geändert wird
+
 
     /**
      * Methode zum Erstellen eines Sichtbarkeitsschalters
@@ -27,6 +29,7 @@ public class VisibilityToggler extends Button {
         super(img, visible, layer, positionX, positionY, sizeX, sizeY,isChildObject);
         this.gameObjectToToggleVisibility=gameObjectToToggleVisibility;
     }
+
 
     /**
      * Methode zum Interagieren mit dem VisibilityToggler

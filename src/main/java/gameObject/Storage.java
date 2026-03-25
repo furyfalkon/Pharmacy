@@ -42,7 +42,7 @@ public class Storage extends GameObject implements Interactable {
     }
 
     /**
-     * Constructor für ein Lager
+     * Constructor für ein Lager welches Teil eines Menüs ist
      *
      * @param columns    Spalten des Lagers
      * @param rows      Zeilen des Lagers
@@ -80,6 +80,11 @@ public class Storage extends GameObject implements Interactable {
         this.items = items;
     }
 
+    /**
+     * Setzen eines konkreten Items
+     * @param item das zu setzende item
+     * @param pos die position an der das item gesetzt wird
+     */
     public void setItem(Item item, int pos) {
         this.items[pos] = item;
     }
