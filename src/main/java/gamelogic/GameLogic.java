@@ -53,6 +53,10 @@ public class GameLogic extends MouseInput{
                 MouseInput.setMouseClicked(false);
                 }
             }
+        if (KeyInput.isKeyTyped()){
+            gameObjects =updatePlayer(gameObjects);
+            KeyInput.keyTyped =false;
+        }
         /*
         * Updated aller mit der Maus in Verbindung stehenden Objekte bezüglich ihrer Position
         * */
@@ -292,4 +296,14 @@ public class GameLogic extends MouseInput{
        return gameObjects;      // Die geupdateten Gameobjekte zurückgeben
 
    }
+    public static GameObjects updatePlayer(GameObjects gameObjects){
+
+        for (int i = 0; i < gameObjects.getSize(); i++) {
+            GameObject aktiveGameObject =gameObjects.getGameObject(i);
+            if (aktiveGameObject instanceof Player){
+                gameObjects= PlayerMovement.move(gameObjects,((Player) aktiveGameObject));
+            }
+        }
+        return gameObjects;
+    }
 }

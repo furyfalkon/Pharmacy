@@ -1,10 +1,13 @@
 package maps;
 import gameObject.*;
+import gameObject.Menu;
 import gameObject.butons.VisibilityToggler;
 import gameObject.items.Drug;
 import gameObject.items.DrugColection;
 import gameObject.items.Item;
 import helper.ImageLoader;
+
+import java.awt.*;
 
 
 /**
@@ -21,7 +24,7 @@ public  class MainRoom implements MapBuilder{
        gameObjects.addGameObjects(buildDecoration());
         gameObjects.addGameObjects(buildStorages());
         gameObjects.addGameObjects(buildMenus());
-
+        gameObjects.addGameObjects(buildPlayer());
         return gameObjects;
     }
 
@@ -92,7 +95,7 @@ public  class MainRoom implements MapBuilder{
         gameObjects.addGameObject(storageMenu);
 
         //Truhe/Button zum Öffnen des Hauptinventars erstellen
-        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",0.04),true,10,100,500,64,64,false,storageMenu);
+        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",1.5),true,4,100,500,96,96,false,storageMenu);
         gameObjects.addGameObject(visibilityTogglerMainStorage2);
 
         return gameObjects;
@@ -102,19 +105,41 @@ public  class MainRoom implements MapBuilder{
      * Klasse zum Erstellen aller dekorativen Objekte
      * @return Liste aller dekorativen Objekte
      */
-    static GameObjects buildDecoration(){
+  private   static GameObjects buildDecoration(){
 
         //temporäre test Objekte
         GameObjects gameObjects =new GameObjects();
-        TempObject tempObject=new TempObject(true,10,320,600);
+        TempObject tempObject=new TempObject(true,4,320,600);
         tempObject.setImg(ImageLoader.loadImage("Tisch.png"));
+        tempObject.setCollidable(true);
+        tempObject.setSizeX(200);
+        tempObject.setSizeY(120);
         gameObjects.addGameObject(tempObject);
 
 
-        TempObject tempObject1=new TempObject(true,10,420,226);
+        TempObject tempObject1=new TempObject(true,4,420,226);
         tempObject1.setImg(ImageLoader.loadImage("Tür.png"));
         gameObjects.addGameObject(tempObject1);
         return gameObjects;
     }
+
+    private static GameObjects buildPlayer(){
+        GameObjects gameObjects =new GameObjects();
+        Image[] idling = new Image[1];
+        Image[] movingDown = new Image[6];
+        idling[0]= ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
+        movingDown[0]= ImageLoader.loadImage("frames_runningvorne/","links_1.png",0.2);
+        movingDown[1]=ImageLoader.loadImage("frames_runningvorne/","links_2.png",0.2);
+        movingDown[2]=ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
+        movingDown[3]=ImageLoader.loadImage("frames_runningvorne/","rechts_1.png",0.2);
+        movingDown[4]=ImageLoader.loadImage("frames_runningvorne/","rechts_2.png",0.2);
+        movingDown[5]=movingDown[2];
+        Player player = new Player(idling,true,110,512,512);
+        player.setMovingDown(movingDown);
+        gameObjects.addGameObject(player);
+
+      return gameObjects;
+    }
+
 
 }

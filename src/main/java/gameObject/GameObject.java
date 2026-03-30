@@ -74,7 +74,6 @@ public  abstract class GameObject {
         this.collidable=false;
     }
 
-
     //Methoden zum Setzen und Abrufen aller Eigenschaften des abstrakten GameObjektes
 
     public Image getImg() {
@@ -176,5 +175,13 @@ public  abstract class GameObject {
 
     public void setLockedToMouse(boolean lockedToMouse) {
         this.lockedToMouse = lockedToMouse;
+    }
+
+    public boolean isCollidable() {
+        return collidable;
+    }
+
+    public void setCollidable(boolean collidable) {
+        this.collidable = collidable;
     }
 }
