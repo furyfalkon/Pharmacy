@@ -98,6 +98,7 @@ public  class MainRoom implements MapBuilder{
         //Truhe/Button zum Öffnen des Hauptinventars erstellen
         VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",1.5),true,1,100,500,96,96,false,storageMenu);
         visibilityTogglerMainStorage2.setCollidable(true);
+        visibilityTogglerMainStorage2.setRange(200);
         gameObjects.addGameObject(visibilityTogglerMainStorage2);
 
         return gameObjects;

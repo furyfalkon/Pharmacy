@@ -2,6 +2,7 @@ package gameObject.butons;
 
 import gameObject.GameObject;
 import gameObject.GameObjects;
+import gameObject.Player;
 
 import java.awt.*;
 
@@ -10,6 +11,7 @@ import java.awt.*;
  */
 public class VisibilityToggler extends Button {
     GameObject gameObjectToToggleVisibility;    //das Objekt dessen Sichtbarkeit geändert wird
+    int range; //Distance, aus der interagiert, werden kann -1 ist eine unendlich hohe distance
 
     /**
      * Methode zum Erstellen eines Sichtbarkeitsschalters
@@ -26,6 +28,7 @@ public class VisibilityToggler extends Button {
     public VisibilityToggler(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY, boolean isChildObject, GameObject gameObjectToToggleVisibility) {
         super(img, visible, layer, positionX, positionY, sizeX, sizeY,isChildObject);
         this.gameObjectToToggleVisibility=gameObjectToToggleVisibility;
+        this.range=-1;
     }
 
     /**
@@ -35,6 +38,8 @@ public class VisibilityToggler extends Button {
      */
     @Override
     public GameObjects interact(GameObjects gameObjects) {
+
+        if (range<0||distanceToPlayer(gameObjects)<range){
         if (gameObjectToToggleVisibility!=null) {                           //wenn das objekt dessen Sichtbarkeit geändert wird nicht leer ist
             if (gameObjectToToggleVisibility.isVisible()) {                     //und es Sichtbar ist
                 gameObjectToToggleVisibility.setVisible(false);                     //wird es unsichtbar gemacht
@@ -47,12 +52,28 @@ public class VisibilityToggler extends Button {
                 return gameObjects;                                                 //und zurück gegeben
             }
         }
+        }
 
 
 
 
         return gameObjects;
     }
+
+    private  int distanceToPlayer(GameObjects gameObjects){
+        for (int i = 0; i < gameObjects.getSize(); i++) {
+            GameObject aktiveGameObjekt = gameObjects.getGameObject(i);
+        if (aktiveGameObjekt instanceof Player){
+            Point buttonPos = new Point(this.getPositionX(),this.getPositionY());
+            Point playerPos= new Point(aktiveGameObjekt.getPositionX(), aktiveGameObjekt.getPositionY());
+             double distance= buttonPos.distance(playerPos);
+             return (int)distance;
+
+        }
+        }
+        return 0;
+    }
+
 
 
     //Getter und Setter
@@ -62,5 +83,9 @@ public class VisibilityToggler extends Button {
 
     public void setGameObjectToToggleVisibility(GameObject gameObjectToToggleVisibility) {
         this.gameObjectToToggleVisibility = gameObjectToToggleVisibility;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 }
