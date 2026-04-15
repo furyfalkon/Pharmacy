@@ -61,6 +61,9 @@ public class PlayerMovement {
                 player.setImg(player.getMovingDown()[movingCycle]);
                 movingCycle =0;
             }
+            if (movingCycle>=animationSize){
+                movingCycle =0;
+            }
             player.setMovingCycle(movingCycle);
         return player;
         }
@@ -74,6 +77,9 @@ public class PlayerMovement {
             }
             if (movingCycle +1==animationSize){
                 player.setImg(player.getMovingUp()[movingCycle]);
+                movingCycle =0;
+            }
+            if (movingCycle>=animationSize){
                 movingCycle =0;
             }
             player.setMovingCycle(movingCycle);
