@@ -19,7 +19,7 @@ public class PlayerMovement {
 
             if (KeyInput.up) {
                 playerY = playerY - speed;
-                player=animationDown(player);
+                player=animationUp(player);
             }
 
             if (KeyInput.down) {
@@ -37,8 +37,8 @@ public class PlayerMovement {
                player= animationDown(player);
             }
 
-            Image[] image = new Image[1];
-            image[0]=player.getImg();
+            Image image;
+            image=player.getImg();
             Player testPlayer =new Player(image,false,0,playerX,playerY);;
 
            if (checkCollision(gameObjects,testPlayer)){
@@ -63,6 +63,21 @@ public class PlayerMovement {
             }
             player.setMovingCycle(movingCycle);
         return player;
+        }
+        private static Player animationUp(Player player){
+            int animationSize = player.getMovingUp().length;
+            int movingCycle = player.getMovingCycle();
+
+            if (movingCycle <animationSize){
+                player.setImg(player.getMovingUp()[movingCycle]);
+                movingCycle++;
+            }
+            if (movingCycle +1==animationSize){
+                player.setImg(player.getMovingUp()[movingCycle]);
+                movingCycle =0;
+            }
+            player.setMovingCycle(movingCycle);
+            return player;
         }
 
         private static boolean checkCollision(GameObjects gameObjects,Player player){

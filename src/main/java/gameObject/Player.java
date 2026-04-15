@@ -8,12 +8,12 @@ public class Player extends GameObject{
     Image[] movingDown;
     Image[] movingRight;
     Image[] movingLeft;
-    Image[] idling;
+    Image idling;
 
 
 
-    public Player(Image[] idling, boolean visible, int layer, int positionX, int positionY) {
-        super(idling[0], visible, layer, positionX, positionY,100,10);
+    public Player(Image idling, boolean visible, int layer, int positionX, int positionY) {
+        super(idling, visible, layer, positionX, positionY,100,10);
         this.setInteractable(false);
         this.movingUp = movingUp;
     }
@@ -44,11 +44,11 @@ public class Player extends GameObject{
 
     public Image[] getMovingLeft() {return movingLeft;}
 
-    public void setIdling(Image[] idling) {
+    public void setIdling(Image idling) {
         this.idling = idling;
     }
 
-    public Image[] getIdling() {return idling;}
+    public Image getIdling() {return idling;}
 
     public int getMovingCycle() {
         return movingCycle;

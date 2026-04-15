@@ -125,12 +125,11 @@ public  class MainRoom implements MapBuilder{
         gameObjects.addGameObject(tempObject1);
         return gameObjects;
     }
-
     private static GameObjects buildPlayer(){
         GameObjects gameObjects =new GameObjects();
-        Image[] idling = new Image[1];
+        Image idling;
         Image[] movingDown = new Image[11];
-        idling[0]= ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
+        idling= ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
         movingDown[0]= ImageLoader.loadImage("frames_runningvorne/","links_1.png",0.2);
         movingDown[1]=movingDown[0];
         movingDown[2]=ImageLoader.loadImage("frames_runningvorne/","links_2.png",0.2);
@@ -142,8 +141,19 @@ public  class MainRoom implements MapBuilder{
         movingDown[8]=ImageLoader.loadImage("frames_runningvorne/","rechts_2.png",0.2);
         movingDown[9]=movingDown[8];
         movingDown[10]=movingDown[4];
+        Image[] movingUp =new Image[9];
+        movingUp[0]=ImageLoader.loadImage("running_hinten/","oben 1.png",3);
+        movingUp[1]=ImageLoader.loadImage("running_hinten/","oben 2.png",3);
+        movingUp[2]=ImageLoader.loadImage("running_hinten/","oben 3.png",3);
+        movingUp[3]=ImageLoader.loadImage("running_hinten/","oben 4.png",3);
+        movingUp[4]=ImageLoader.loadImage("running_hinten/","oben 5.png",3);
+        movingUp[5]=ImageLoader.loadImage("running_hinten/","oben 6.png",3);
+        movingUp[6]=ImageLoader.loadImage("running_hinten/","oben 7.png",3);
+        movingUp[7]=ImageLoader.loadImage("running_hinten/","oben 8.png",3);
+        movingUp[8]=movingUp[0];
         Player player = new Player(idling,true,9,600,512);
         player.setMovingDown(movingDown);
+        player.setMovingUp(movingUp);
         gameObjects.addGameObject(player);
 
       return gameObjects;
