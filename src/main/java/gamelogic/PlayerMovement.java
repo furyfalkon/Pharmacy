@@ -39,7 +39,7 @@ public class PlayerMovement {
 
             Image image;
             image=player.getImg();
-            Player testPlayer =new Player(image,false,0,playerX,playerY);;
+            Player testPlayer =new Player(image,false,0,playerX,playerY);
 
            if (checkCollision(gameObjects,testPlayer)){
                player.setPositionX(playerX);
@@ -111,9 +111,7 @@ public class PlayerMovement {
            int SizeX = gameObject.getSizeX();
            int SizeY = gameObject.getSizeY();
            if (point.getX()>position.getX()&&point.getX()<position.getX()+SizeX){
-               if (point.getY()>position.getY()&& point.getY()<position.getY()+SizeY){
-                   return true;
-               }
+               return point.getY() > position.getY() && point.getY() < position.getY() + SizeY;
            }
            return false;
         }

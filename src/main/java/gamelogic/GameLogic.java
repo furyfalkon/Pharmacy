@@ -2,6 +2,7 @@ package gamelogic;
 import gameObject.*;
 import gameObject.Menu;
 import gameObject.butons.VisibilityToggler;
+import gameObject.music.*;
 import helper.Sorter;
 import java.awt.*;
 
@@ -41,6 +42,8 @@ public class GameLogic extends MouseInput{
                            selectedGameObject.getPositionX(), selectedGameObject.getPositionY(),    //Übergabe der Lager Position
                            MouseInput.mouseX, MouseInput.mouseY                                     //Übergabe der Maus Position
                     );
+                        EinmaligesAbspielen drinnenlaufen = new EinmaligesAbspielen();
+                        drinnenlaufen.play("inventaroeffnen.wav");
                     }
                     //Fall: es wurde auf ein VisibilityToggler geklickt
                     if (selectedGameObject instanceof VisibilityToggler){
@@ -70,10 +73,14 @@ public class GameLogic extends MouseInput{
                 //E Taste wurde Gedrückt
                 if (key=='e'){
                     gameObjects =openPayerInventory(gameObjects);// öffnet das SpielerInventar
+                    EinmaligesAbspielen drinnenlaufen = new EinmaligesAbspielen();
+                    drinnenlaufen.play("inventaroeffnen.wav");
                 }
                 //ESC Taste wurde Gedrückt
                 if (key==27){
                     gameObjects =closeAllMenus(gameObjects);//Schließt alle Menüs
+                    EinmaligesAbspielen drinnenlaufen = new EinmaligesAbspielen();
+                    drinnenlaufen.play("schnippsen.wav");
                 }
                 // Gedrückte Taste wieder auf lehr setzen
                 KeyInput.aktiveKey=' ';
