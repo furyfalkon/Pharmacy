@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
         allGameObjects =new GameObjects();//Legt die GameObjekt Liste an
         allGameObjects = MapBuilder.buildAll(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
         UnendlichesAbspielen mainMusic =new UnendlichesAbspielen();
-       // mainMusic.play("housegartenfertig.wav");
+        mainMusic.play("housegartenfertig.wav");
         /*
          * Game Loop (Update -> repaint -> Pause)
          */
