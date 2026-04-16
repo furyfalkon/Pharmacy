@@ -63,7 +63,7 @@ public class VisibilityToggler extends Button {
         return gameObjects;
     }
 
-    private  int distanceToPlayer(GameObjects gameObjects){
+    private    int distanceToPlayer(GameObjects gameObjects){
         for (int i = 0; i < gameObjects.getSize(); i++) {
             GameObject aktiveGameObjekt = gameObjects.getGameObject(i);
         if (aktiveGameObjekt instanceof Player){

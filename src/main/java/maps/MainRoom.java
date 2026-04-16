@@ -13,20 +13,20 @@ import java.awt.*;
 /**
  * Klasse zum Bauen (Initialisation) des HauptRaumes
  */
-public  class MainRoom implements MapBuilder{
+public  class MainRoom{
     /**
      * Methode zum Bauen (Initialisation) des HauptRaumes
-     * @param gameObjects Liste aller Gameobjekte der aktuellen Karte
      * @return Liste aller Gameobjekte nach dem Bauen (Initialisieren) der Karte
      */
-    public static GameObjects buildMap(GameObjects gameObjects){
+    public static Menu buildMap(){
+        GameObjects gameObjects=new GameObjects();
        gameObjects.addGameObjects(buildBackgrounds());
        gameObjects.addGameObjects(buildDecoration());
-        gameObjects.addGameObjects(buildStorages());
         gameObjects.addGameObjects(buildMenus());
-        gameObjects.addGameObjects(buildPlayer());
         gameObjects.addGameObjects(buildCollisionBoxes());
-        return gameObjects;
+        Menu mainRoom =new Menu(ImageLoader.loadImage("empty.png"),true,0,0,0,1024,1024,gameObjects);
+        mainRoom.setInteractable(false);
+        return mainRoom;
     }
 
 
@@ -39,19 +39,6 @@ public  class MainRoom implements MapBuilder{
         return gameObjects;
     }
 
-    /**
-     * Klasse zum Erstellen aller Lager
-     * @return gameObject liste aller Lager
-     */
-    private static GameObjects buildStorages(){
-        GameObjects gameObjects=new GameObjects();
-        //Mouse Storage Bauen
-        Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseStorage",100,0,0,1,1);
-        mouseStorage.setVisible(true);
-        mouseStorage.interactable=false;
-        gameObjects.addGameObject(mouseStorage);
-        return gameObjects;
-    }
 
     /**
      * Klasse zum Erstellen aller Menüs/Container und ihrer Child objekte
@@ -59,33 +46,12 @@ public  class MainRoom implements MapBuilder{
      */
     private static GameObjects buildMenus(){
         GameObjects gameObjects=new GameObjects();
-        GameObjects ChildGameObjects=new GameObjects();
-
-
-        //Menü des PlayerInventars erstellen
-        Storage playerInventory = new Storage(ImageLoader.loadImage("InvSlot.png"),"playerInventory",1,0,32,10,5);
-        playerInventory.setImg(ImageLoader.loadTiledImage("InvSlot.png",playerInventory.getColumns(),playerInventory.getRows()));
-        playerInventory.setVisible(true);
-        Item testItem =new Drug(DrugColection.getCocain());
-        playerInventory.setItem(testItem,0);
-        playerInventory.setAmount(0,3);
-        gameObjects.addGameObject(playerInventory);
-        ChildGameObjects.addGameObject(playerInventory);
-
-
-        Menu menu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,15,10,256,32*10,32,ChildGameObjects);
-        VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,menu);
-        menu.addMenuGameObject(visibilityToggler);
-        gameObjects.addGameObject(menu);
-
-
-
 
 
 
 
         //Menü des Hauptinventars erstellen
-        Menu storageMenu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,10,10,600,32*10,32,new GameObjects());
+        Menu storageMenu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,10,10,600,32*10,320,new GameObjects());
         VisibilityToggler visibilityTogglerMainStorage = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,storageMenu);
         storageMenu.addMenuGameObject(visibilityTogglerMainStorage);
 
@@ -120,44 +86,10 @@ public  class MainRoom implements MapBuilder{
         gameObjects.addGameObject(tempObject);
 
 
-        TempObject tempObject1=new TempObject(true,4,420,226);
-        tempObject1.setImg(ImageLoader.loadImage("Räume/Türen/","Tür2.png",0.3));
-        gameObjects.addGameObject(tempObject1);
+
         return gameObjects;
     }
-    private static GameObjects buildPlayer(){
-        GameObjects gameObjects =new GameObjects();
-        Image idling;
-        Image[] movingDown = new Image[11];
-        idling= ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
-        movingDown[0]= ImageLoader.loadImage("frames_runningvorne/","links_1.png",0.2);
-        movingDown[1]=movingDown[0];
-        movingDown[2]=ImageLoader.loadImage("frames_runningvorne/","links_2.png",0.2);
-        movingDown[3]=movingDown[2];
-        movingDown[4]=ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
-        movingDown[5]=movingDown[4];
-        movingDown[6]=ImageLoader.loadImage("frames_runningvorne/","rechts_1.png",0.2);
-        movingDown[7]=movingDown[6];
-        movingDown[8]=ImageLoader.loadImage("frames_runningvorne/","rechts_2.png",0.2);
-        movingDown[9]=movingDown[8];
-        movingDown[10]=movingDown[4];
-        Image[] movingUp =new Image[9];
-        movingUp[0]=ImageLoader.loadImage("running_hinten/","oben 1.png",3);
-        movingUp[1]=ImageLoader.loadImage("running_hinten/","oben 2.png",3);
-        movingUp[2]=ImageLoader.loadImage("running_hinten/","oben 3.png",3);
-        movingUp[3]=ImageLoader.loadImage("running_hinten/","oben 4.png",3);
-        movingUp[4]=ImageLoader.loadImage("running_hinten/","oben 5.png",3);
-        movingUp[5]=ImageLoader.loadImage("running_hinten/","oben 6.png",3);
-        movingUp[6]=ImageLoader.loadImage("running_hinten/","oben 7.png",3);
-        movingUp[7]=ImageLoader.loadImage("running_hinten/","oben 8.png",3);
-        movingUp[8]=movingUp[0];
-        Player player = new Player(idling,true,9,600,512);
-        player.setMovingDown(movingDown);
-        player.setMovingUp(movingUp);
-        gameObjects.addGameObject(player);
 
-      return gameObjects;
-    }
 
     private static GameObjects buildCollisionBoxes(){
       GameObjects gameObjects = new GameObjects();

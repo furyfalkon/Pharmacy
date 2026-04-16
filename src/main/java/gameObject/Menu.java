@@ -46,11 +46,15 @@ public class Menu extends  GameObject  {
 
     /**
      * update Methode für ein menü und seine Child Objekte
-     * @param gameObjects die aktuellen game Objekte
      * @return die geupdateten GameObjekte
      */
-    public  GameObjects updateMenu(GameObjects gameObjects){
+    public  GameObjects updateMenu(int superPosX,int superPosY,int superLayer,boolean superVisibility){
+        GameObjects gameObjects= new GameObjects();
         Menu aktiveMenu = this;
+        aktiveMenu.setPositionX(superPosX+aktiveMenu.getPositionX());
+        aktiveMenu.setPositionY(superPosY+aktiveMenu.getPositionY());
+        aktiveMenu.setLayer(superLayer+aktiveMenu.getLayer());
+        aktiveMenu.setVisible(superVisibility&&aktiveMenu.isVisible());
         GameObjects aktiveMenuGameObjects = aktiveMenu.getMenuGameObjects();
         for (int j = 0; j <aktiveMenuGameObjects.getSize(); j++) {                      //alle Child Objekte durchgehen
             GameObject aktiveChildGameObject = aktiveMenuGameObjects.getGameObject(j);  //das aktuelle ChildGameObjekt speichern
@@ -65,26 +69,22 @@ public class Menu extends  GameObject  {
                     absoluteChildObjectVisibility=true;
                 }
             }
+
+            if (aktiveChildGameObject instanceof Menu){
+               gameObjects.addGameObjects( ((Menu) aktiveChildGameObject).updateMenu(
+                       aktiveMenu.getPositionX(),
+                       aktiveMenu.positionY,
+                       aktiveMenu.layer,
+                       aktiveMenu.isVisible()));
+            }
+            if (aktiveChildGameObject instanceof Storage){
+                gameObjects.addGameObjects(((Storage)aktiveChildGameObject).prepareStorageForRendering( aktiveMenu.getPositionX(),
+                        aktiveMenu.positionY,
+                        aktiveMenu.layer,
+                        aktiveMenu.isVisible()));
+            }
             //ein neues nun globales Game objekt erstellen welches alle wichtigen eigenschaften des Child Objektes beibehält
-            GameObject globalChildGameObject = null;
-
-                Image img =aktiveChildGameObject.getImg();
-                if (aktiveChildGameObject instanceof Background){
-                    globalChildGameObject= new Background(img);
-                }
-
-                   if (aktiveChildGameObject instanceof gameObject.butons.VisibilityToggler){
-                       globalChildGameObject= new VisibilityToggler(img,false,0,0,0,aktiveChildGameObject.getSizeX(),aktiveChildGameObject.getSizeY(),false,((VisibilityToggler) aktiveChildGameObject).getGameObjectToToggleVisibility());
-                    }
-
-                if (aktiveChildGameObject instanceof Storage){
-                    globalChildGameObject =new Storage(img,((Storage) aktiveChildGameObject).getName(),1,0,0,((Storage) aktiveChildGameObject).getColumns(),((Storage) aktiveChildGameObject).getRows());
-                    ((Storage) globalChildGameObject).setItems(((Storage) aktiveChildGameObject).getItems());
-                    ((Storage) globalChildGameObject).setAmounts(((Storage) aktiveChildGameObject).getAmounts());
-                }
-                if (aktiveChildGameObject instanceof TempObject){
-                    globalChildGameObject = new TempObject(false,0,0,0);
-                }
+            RenderObject globalChildGameObject = new RenderObject(aktiveChildGameObject);
 
             //Wen das globale child Game Objekt erfolgreich initialisiert wurde und nicht mehr null ist
             if (globalChildGameObject != null){
@@ -95,9 +95,8 @@ public class Menu extends  GameObject  {
                 globalChildGameObject.setVisible(absoluteChildObjectVisibility);
                 globalChildGameObject.setChildObject(true);
                 gameObjects.addGameObject(globalChildGameObject);
-                if (globalChildGameObject instanceof Storage){
-                    gameObjects=((Storage) globalChildGameObject).updateStorage(gameObjects);
-                }
+
+
             }
         }
         return gameObjects; //rückgabe der geupdateten game Objekte

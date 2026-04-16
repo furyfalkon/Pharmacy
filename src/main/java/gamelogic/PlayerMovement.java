@@ -2,6 +2,7 @@ package gamelogic;
 
 import gameObject.GameObject;
 import gameObject.GameObjects;
+import gameObject.Menu;
 import gameObject.Player;
 import gameObject.music.EinmaligesAbspielen;
 import gameObject.music.UnendlichesAbspielen;
@@ -111,17 +112,23 @@ public class PlayerMovement {
             Point playerBottomRight = new Point(player.getPositionX()+player.getSizeX(), player.getPositionY()+player.getSizeY()+hitboxVerticalOffset);
             for (int i = 0; i < gameObjects.getSize(); i++) {
                 GameObject aktiveGameObjekt = gameObjects.getGameObject(i);
-                if (aktiveGameObjekt.isCollidable()){
-                    if (pointIsInObject(playerTopLeft,aktiveGameObjekt)
-                            ||pointIsInObject(playerTopRight,aktiveGameObjekt)
-                            ||pointIsInObject(playerBottomLeft,aktiveGameObjekt)
-                            ||pointIsInObject(playerBottomRight,aktiveGameObjekt)){
+                if (aktiveGameObjekt instanceof Menu&& aktiveGameObjekt.isVisible()){
+                    for (int j = 0; j <((Menu) aktiveGameObjekt).getMenuGameObjects().getSize(); j++) {
+                    GameObject aktiveChildGameObject =((Menu) aktiveGameObjekt).getMenuGameObjects().getGameObject(j);
+                if (aktiveChildGameObject.isCollidable()){
+                    if (pointIsInObject(playerTopLeft,aktiveChildGameObject)
+                            ||pointIsInObject(playerTopRight,aktiveChildGameObject)
+                            ||pointIsInObject(playerBottomLeft,aktiveChildGameObject)
+                            ||pointIsInObject(playerBottomRight,aktiveChildGameObject)){
                       return false;
                     }
                 }
             }
+            }
+            }
             return true;
         }
+
 
         private static boolean pointIsInObject(Point point,GameObject gameObject){
            Point position= new Point( gameObject.getPositionX(), gameObject.getPositionY());

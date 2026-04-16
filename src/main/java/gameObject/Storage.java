@@ -164,8 +164,7 @@ public class Storage extends GameObject implements Interactable {
             if (targetStorage.items[i] == sourceStorage.items[pos]) {
                 targetStorage.amount[i] = targetStorage.amount[i] + sourceStorage.amount[pos];
                 emptyPos(sourceStorage, pos);
-                gameObjects = sourceStorage.updateStorage(gameObjects);
-                gameObjects = sourceStorage.updateStorage(gameObjects);
+
 
                 return gameObjects;
             }
@@ -175,14 +174,11 @@ public class Storage extends GameObject implements Interactable {
                 targetStorage.items[i] = sourceStorage.items[pos];
                 targetStorage.amount[i] = sourceStorage.amount[pos];
                 emptyPos(sourceStorage, pos);
-                gameObjects = sourceStorage.updateStorage(gameObjects);
-                gameObjects = sourceStorage.updateStorage(gameObjects);
+
 
                 return gameObjects;
             }
         }
-        gameObjects = sourceStorage.updateStorage(gameObjects);
-        gameObjects = sourceStorage.updateStorage(gameObjects);
 
         return gameObjects;
     }
@@ -216,7 +212,7 @@ public class Storage extends GameObject implements Interactable {
         } else if (ziehlStorage.items[zielPos].sameTypAs(sourceStorage.items[sourcePos])) {
             if (sourceStorage.amount[sourcePos] > 0) {
                 ziehlStorage.amount[zielPos]++;
-                sourceStorage.amount[zielPos]--;
+                sourceStorage.amount[sourcePos]--;
                 EinmaligesAbspielen.play("schnippsen.wav");
             }
             if (sourceStorage.amount[sourcePos] == 0) {
@@ -224,8 +220,7 @@ public class Storage extends GameObject implements Interactable {
             }
         }
 
-        gameObjects = sourceStorage.updateStorage(gameObjects);
-        gameObjects = ziehlStorage.updateStorage(gameObjects);
+
 
         return gameObjects;
 
@@ -269,8 +264,6 @@ public class Storage extends GameObject implements Interactable {
             }
         }
 
-        gameObjects = sourceStorage.updateStorage(gameObjects);
-        gameObjects = ziehlStorage.updateStorage(gameObjects);
 
         return gameObjects;
 
@@ -303,7 +296,11 @@ public class Storage extends GameObject implements Interactable {
             }
             //Rechte maustaste
             if (button == 3) {
-                gameObjects = addOneItem(gameObjects, mouseStorage, this, 0, mousePos);
+                if (this.getAmount(mousePos)==0) {
+                    gameObjects = addOneItem(gameObjects, mouseStorage, this, 0, mousePos);
+                }else {
+                    gameObjects = addOneItem(gameObjects,this, mouseStorage, mousePos, 0);
+                }
             }
         } else {
             System.out.println("Mouse Storage empty");
@@ -350,27 +347,27 @@ public class Storage extends GameObject implements Interactable {
     }
 
 
-    public GameObjects updateStorage(GameObjects gameObjects){
+    public GameObjects prepareStorageForRendering(int superPosX,int superPosY,int superLayer,boolean superVisibility){
+        GameObjects gameObjects=new GameObjects();
         Storage aktiveStorage = this;
-        for (int i = 0; i < gameObjects.getSize(); i++) {
-            if (gameObjects.getGameObject(i) instanceof Storage) {
-                if (Objects.equals(((Storage) gameObjects.getGameObject(i)).getName(), aktiveStorage.getName())) {
-                    gameObjects.getGameObjects().set(i, aktiveStorage);
-                }
-            }
-        }
+        int renderPositionOfAktiveStorageX =(superPosX+aktiveStorage.getPositionX());
+        int renderPositionOfAktiveStorageY =(superPosY+aktiveStorage.getPositionY());
+        int renderLayerOfAktiveStorage =(superLayer+aktiveStorage.getLayer());
+        boolean renderVisibilityOfAktiveStorage =(superVisibility&&aktiveStorage.isVisible());
 
-        for (int j = 0; j < aktiveStorage.getItems().length; j++) {
-            if (aktiveStorage.getItems()[j]!=null){
-                Point localItemCoordinates = aktiveStorage.getLocalItemCoordinates(j);
-                int absoluteItemPositionX = localItemCoordinates.x + aktiveStorage.getPositionX();
-                int absoluteItemPositionY = localItemCoordinates.y + aktiveStorage.getPositionY();
-                aktiveStorage.getItems()[j].setPositionX(absoluteItemPositionX);
-                aktiveStorage.getItems()[j].setPositionY(absoluteItemPositionY);
-                aktiveStorage.getItems()[j].setLayer(aktiveStorage.getLayer() + 1);
-                aktiveStorage.getItems()[j].setVisible(aktiveStorage.isVisible());
-                aktiveStorage.getItems()[j].setTextToDisplay(aktiveStorage.getAmounts()[j] + "");
-                gameObjects.addGameObject(aktiveStorage.getItems()[j]);}
+        for (int i = 0; i < aktiveStorage.getItems().length; i++) {
+            Item aktiveItem =aktiveStorage.getItem(i);
+            if (aktiveItem!=null){
+
+                Point localItemCoordinates = aktiveStorage.getLocalItemCoordinates(i);
+                int absoluteItemPositionX = localItemCoordinates.x + renderPositionOfAktiveStorageX;
+                int absoluteItemPositionY = localItemCoordinates.y +renderPositionOfAktiveStorageY;
+                aktiveItem.setPositionX(absoluteItemPositionX);
+                aktiveItem.setPositionY(absoluteItemPositionY);
+                aktiveItem.setLayer(renderLayerOfAktiveStorage + 1);
+                aktiveItem.setVisible(renderVisibilityOfAktiveStorage);
+                aktiveItem.setTextToDisplay(aktiveStorage.getAmounts()[i] + "");
+                gameObjects.addGameObject(aktiveStorage.getItems()[i]);}
         }
         return gameObjects;
     }

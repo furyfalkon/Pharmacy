@@ -6,6 +6,7 @@ import gameObject.music.UnendlichesAbspielen;
 import gamelogic.GameLogic;
 import gamelogic.MouseInput;
 import maps.MainRoom;
+import maps.MapBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,8 @@ import java.awt.font.TextLayout;
  * Game Panel in welchem das Spiel Läuft
  */
 public class GamePanel extends JPanel implements Runnable {
-    GameObjects allGameObjects; //liste aller gameObjekt im aktuellen gamePanel
+   static GameObjects allGameObjects; //liste aller gameObjekt im aktuellen gamePanel
+    static GameObjects gameObjectsToRender;
     /**
      * Das Feld wird in Tiles unterteilt um Sicherzustellen,
      * dass die Gesamtauflösung ein Vielfaches der Tile size ist und somit das tilen von Objekten der Standard Auflösung möglich ist
@@ -49,14 +51,14 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
 
         allGameObjects =new GameObjects();//Legt die GameObjekt Liste an
-        allGameObjects = MainRoom.buildMap(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
+        allGameObjects = MapBuilder.buildAll(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
         UnendlichesAbspielen mainMusic =new UnendlichesAbspielen();
-        mainMusic.play("housegartenfertig.wav");
+       // mainMusic.play("housegartenfertig.wav");
         /*
          * Game Loop (Update -> repaint -> Pause)
          */
         Timer t = new Timer(delay, actionEvent -> {
-            allGameObjects =GameLogic.update(allGameObjects);
+            GameLogic.update();
             repaint();
         });
         t.start();
@@ -74,9 +76,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d= (Graphics2D) g;
 
-        if (allGameObjects!=null){
-        for (int i = 0; i < allGameObjects.getSize(); i++) {
-           GameObject aktuellesGameobjekt= allGameObjects.getGameObject(i);
+        if (gameObjectsToRender!=null){
+        for (int i = 0; i < gameObjectsToRender.getSize(); i++) {
+           GameObject aktuellesGameobjekt= gameObjectsToRender.getGameObject(i);
            //zeichnet das Bild des aktuellen Gameobjekts, wenn dieses sichtbar ist
            if (aktuellesGameobjekt.isVisible()){
             g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.getPositionX(),aktuellesGameobjekt.getPositionY(),null);
@@ -99,4 +101,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
+    public static GameObjects getAllGameObjects() {
+        return allGameObjects;
+    }
+
+    public static void setAllGameObjects(GameObjects allGameObjects) {
+        GamePanel.allGameObjects = allGameObjects;
+    }
+
+    public static void setGameObjectsToRender(GameObjects gameObjectsToRender) {
+        GamePanel.gameObjectsToRender = gameObjectsToRender;
+    }
 }

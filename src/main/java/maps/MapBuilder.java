@@ -1,32 +1,29 @@
 package maps;
 
 import gameObject.GameObjects;
+import gameObject.Menu;
+import gameObject.butons.VisibilitySwitcher;
+import helper.ImageLoader;
 
-public interface MapBuilder {
-    static GameObjects buildMap(GameObjects gameObjects){
-        gameObjects.addGameObjects(buildBackgrounds());
-        gameObjects.addGameObjects(buildDecoration());
-        gameObjects.addGameObjects(buildStorages());
-        gameObjects.addGameObjects(buildMenus());
-        return gameObjects;
-    };
-     static GameObjects buildBackgrounds(){
-        GameObjects gameObjects =new GameObjects();
-        return gameObjects;
-    };
+public class MapBuilder {
 
-    static GameObjects buildDecoration(){
-        GameObjects gameObjects =new GameObjects();
-        return gameObjects;
-    }
+    public static GameObjects buildAll(GameObjects gameObjects) {
 
-    static GameObjects buildStorages(){
-        GameObjects gameObjects =new GameObjects();
-        return gameObjects;
-    }
+        gameObjects.addGameObjects(Global.buildGlobal());
 
-    static GameObjects buildMenus(){
-        GameObjects gameObjects =new GameObjects();
+
+        Menu mainRoom = MainRoom.buildMap();
+        Menu garden = Garden.buildMap();
+        garden.setVisible(false);
+        VisibilitySwitcher switcher = new VisibilitySwitcher(ImageLoader.loadImage("Räume/Türen/","Tür2.png",0.3),true,4,420,226,145,280,false,mainRoom,garden);
+        switcher.setRange(300);
+        mainRoom.addMenuGameObject(switcher);
+
+        gameObjects.addGameObject(mainRoom);
+        gameObjects.addGameObject(garden);
+
+
+
         return gameObjects;
     }
 }

@@ -1,4 +1,4 @@
 package maps;
 
-public class Kitchen implements MapBuilder{
+public class Kitchen {
 }

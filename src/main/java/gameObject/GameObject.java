@@ -3,7 +3,7 @@ import java.awt.*;
 /**
  * Abstraktes Game Objekt welches als Basis für alle Objekte im Spiel dient
  * */
-public  abstract class GameObject {
+public  abstract class GameObject  {
 
     //Eigenschaften der Darstellung
     Image img;              //Bild des GameObjektes
@@ -73,6 +73,7 @@ public  abstract class GameObject {
         this.draggable =false;
         this.collidable=false;
     }
+
 
     //Methoden zum Setzen und Abrufen aller Eigenschaften des abstrakten GameObjektes
 
