@@ -17,6 +17,8 @@ public class GameLogic extends MouseInput{
      * */
     public static GameObjects update(GameObjects gameObjects){
 
+
+
         //information für Statusmeldung in der Konsole
         int lastGamObjectLength=gameObjects.getSize();
         //System.out.println("started Updating");//Statusmeldung in der Konsole
@@ -59,6 +61,9 @@ public class GameLogic extends MouseInput{
             gameObjects =updatePlayer(gameObjects);
             KeyInput.keyTyped =false;
         }
+        if (KeyInput.isKeyReleased()){
+            gameObjects =updatePlayer(gameObjects);
+            KeyInput.keyReleased =false;}
         /*
         * Updated aller mit der Maus in Verbindung stehenden Objekte bezüglich ihrer Position
         * */

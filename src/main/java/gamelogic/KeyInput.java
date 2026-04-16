@@ -11,6 +11,8 @@ public class KeyInput extends KeyAdapter {
 
          static   boolean keyTyped;
 
+         static boolean keyReleased;
+
 
     //Variablen für bewegungsrichtung festlegen
     public static boolean up;
@@ -55,7 +57,7 @@ public class KeyInput extends KeyAdapter {
 
         @Override
         public void keyReleased(KeyEvent keyEvent) {
-
+            keyReleased =true;
             if (keyEvent.getKeyCode() == KeyEvent.VK_W) up = false;
             if (keyEvent.getKeyCode() == KeyEvent.VK_A) left = false;
             if (keyEvent.getKeyCode() == KeyEvent.VK_S) down = false;
@@ -68,6 +70,10 @@ public class KeyInput extends KeyAdapter {
 
     public static boolean isKeyTyped() {
         return keyTyped;
+    }
+
+    public static boolean isKeyReleased() {
+        return keyReleased;
     }
 }
 

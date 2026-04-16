@@ -50,7 +50,7 @@ public class VisibilityToggler extends Button {
             }
             if (!gameObjectToToggleVisibility.isVisible()) {                    //und es nicht sichtbar ist
                 gameObjectToToggleVisibility.setVisible(true);                  //wird es sichtbar gesetzt
-                EinmaligesAbspielen.play("inventaroeffnen.wav");         //es wird ein Sound abgespielt
+                EinmaligesAbspielen.play("boxoeffnen.wav");         //es wird ein Sound abgespielt
                 gameObjects.updateGameObject(gameObjectToToggleVisibility);         //gespeichert
                 return gameObjects;                                                 //und zurück gegeben
             }

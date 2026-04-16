@@ -3,6 +3,8 @@ package gamelogic;
 import gameObject.GameObject;
 import gameObject.GameObjects;
 import gameObject.Player;
+import gameObject.music.EinmaligesAbspielen;
+import gameObject.music.UnendlichesAbspielen;
 
 import java.awt.*;
 
@@ -11,32 +13,47 @@ public class PlayerMovement {
 
         //Anfangsgeschwindigkeit für player
         static int speed = 10;
-
+        static UnendlichesAbspielen playerMoving =new UnendlichesAbspielen();
+        static boolean soundRunning;
         //Ausführen der bewegung wenn die variable true
         public static GameObjects move(GameObjects gameObjects,Player player) {
             int playerX = player.getPositionX();
             int playerY = player.getPositionY();
 
+
+            Boolean playerIsBeingMoved =false;
             if (KeyInput.up) {
                 playerY = playerY - speed;
                 player=animationUp(player);
+                playerIsBeingMoved=true;
             }
 
             if (KeyInput.down) {
                 playerY = playerY + speed;
                 player=animationDown(player);
+                playerIsBeingMoved=true;
             }
 
             if (KeyInput.left) {
                 playerX = playerX - speed;
               player=  animationDown(player);
+                playerIsBeingMoved=true;
             }
 
             if (KeyInput.right) {
                 playerX = playerX + speed;
                player= animationDown(player);
+                playerIsBeingMoved=true;
             }
 
+            if (playerIsBeingMoved&&(!soundRunning)){
+                playerMoving.play("drinnenlaufen.wav");
+                soundRunning =true;
+            }
+            if ((!playerIsBeingMoved)&&soundRunning){
+                playerMoving.stop();
+                soundRunning=false;
+            }
             Image image;
             image=player.getImg();
             Player testPlayer =new Player(image,false,0,playerX,playerY);
@@ -115,5 +132,9 @@ public class PlayerMovement {
            }
            return false;
         }
+
+
+
+
 
 }

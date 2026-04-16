@@ -2,6 +2,7 @@ package main;
 
 import gameObject.GameObject;
 import gameObject.GameObjects;
+import gameObject.music.UnendlichesAbspielen;
 import gamelogic.GameLogic;
 import gamelogic.MouseInput;
 import maps.MainRoom;
@@ -49,7 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         allGameObjects =new GameObjects();//Legt die GameObjekt Liste an
         allGameObjects = MainRoom.buildMap(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
-
+        UnendlichesAbspielen mainMusic =new UnendlichesAbspielen();
+        mainMusic.play("housegartenfertig.wav");
         /*
          * Game Loop (Update -> repaint -> Pause)
          */

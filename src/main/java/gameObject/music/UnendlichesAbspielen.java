@@ -16,8 +16,8 @@ import java.net.URL;
  * @author andre
  */
 public class UnendlichesAbspielen {
-      private Clip clip;
-    public void play(String fileName) {
+      private  Clip clip;
+    public  void play(String fileName) {
         String fullFilename = "resources/Musiken/" + fileName;
         File soundFile;
         AudioInputStream audioStream = null;
