@@ -3,6 +3,7 @@ package gameObject;
 import gameObject.items.Drug;
 import gameObject.items.Ingredient;
 import gameObject.items.Item;
+import gameObject.music.EinmaligesAbspielen;
 
 import java.awt.*;
 import java.util.Objects;
@@ -207,6 +208,7 @@ public class Storage extends GameObject implements Interactable {
                 ziehlStorage.items[zielPos] = newItem;
                 ziehlStorage.amount[zielPos]++;
                 sourceStorage.amount[sourcePos]--;
+                EinmaligesAbspielen.play("schnippsen.wav");
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);
@@ -215,6 +217,7 @@ public class Storage extends GameObject implements Interactable {
             if (sourceStorage.amount[sourcePos] > 0) {
                 ziehlStorage.amount[zielPos]++;
                 sourceStorage.amount[zielPos]--;
+                EinmaligesAbspielen.play("schnippsen.wav");
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);
@@ -250,6 +253,7 @@ public class Storage extends GameObject implements Interactable {
                 ziehlStorage.items[zielPos] = newItem;
                 ziehlStorage.amount[zielPos] = sourceStorage.amount[sourcePos];
                 sourceStorage.amount[sourcePos] = 0;
+                EinmaligesAbspielen.play("schnippsen.wav");
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);
@@ -258,6 +262,7 @@ public class Storage extends GameObject implements Interactable {
             if (sourceStorage.amount[sourcePos] > 0) {
                 ziehlStorage.amount[zielPos] = ziehlStorage.amount[zielPos] + sourceStorage.amount[sourcePos];
                 sourceStorage.amount[sourcePos] = 0;
+                EinmaligesAbspielen.play("schnippsen.wav");
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);

@@ -3,6 +3,7 @@ package gameObject.butons;
 import gameObject.GameObject;
 import gameObject.GameObjects;
 import gameObject.Player;
+import gameObject.music.EinmaligesAbspielen;
 
 import java.awt.*;
 
@@ -42,12 +43,14 @@ public class VisibilityToggler extends Button {
         if (range<0||distanceToPlayer(gameObjects)<range){
         if (gameObjectToToggleVisibility!=null) {                           //wenn das objekt dessen Sichtbarkeit geändert wird nicht leer ist
             if (gameObjectToToggleVisibility.isVisible()) {                     //und es Sichtbar ist
-                gameObjectToToggleVisibility.setVisible(false);                     //wird es unsichtbar gemacht
+                gameObjectToToggleVisibility.setVisible(false);                 //wird es unsichtbar gemacht
+                EinmaligesAbspielen.play("schnippsen.wav");             //es wird ein Sound abgespielt
                 gameObjects.updateGameObject(gameObjectToToggleVisibility);         //gespeichert
                 return gameObjects;                                                 //und zurück gegeben
             }
             if (!gameObjectToToggleVisibility.isVisible()) {                    //und es nicht sichtbar ist
-                gameObjectToToggleVisibility.setVisible(true);                      //wird es sichtbar gesetzt
+                gameObjectToToggleVisibility.setVisible(true);                  //wird es sichtbar gesetzt
+                EinmaligesAbspielen.play("inventaroeffnen.wav");         //es wird ein Sound abgespielt
                 gameObjects.updateGameObject(gameObjectToToggleVisibility);         //gespeichert
                 return gameObjects;                                                 //und zurück gegeben
             }
