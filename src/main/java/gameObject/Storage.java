@@ -42,26 +42,6 @@ public class Storage extends GameObject implements Interactable {
         this.amount[0] = 0;
     }
 
-    /**
-     * Constructor für ein Lager
-     *
-     * @param columns    Spalten des Lagers
-     * @param rows      Zeilen des Lagers
-     * @param positionX Position der oberen Linken Ecke des Lagers (x-Koordinate)
-     * @param positionY Position der oberen Linken Ecke des Lagers (y-Koordinate)
-     */
-    public Storage(Image img, String name, int layer, int positionX, int positionY, int columns, int rows, boolean isChildObject) {
-        super(img, false, layer, positionX, positionY, columns * 32, rows * 32);
-        int size = rows * columns;
-        this.rows = rows;
-        this.columns = columns;
-        this.items = new Item[size];
-        this.items[0] = null;
-        this.name = name;
-        this.amount = new int[size];
-        this.amount[0] = 0;
-        setChildObject(isChildObject);
-    }
 
     /**
      * alle items eines Lagers bekommen

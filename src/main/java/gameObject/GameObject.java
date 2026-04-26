@@ -16,15 +16,13 @@ public  abstract class GameObject  {
     int positionY;
 
     //Eigenschaften der Interaktion
-    public boolean interactable;        //Interagierbarkeitsstatus
-    public boolean collidable;          //Kolidierbarkeitsstatus
-    public int sizeX;                   //Breite der "Hitbox" des Objektes
-    public int sizeY;                   //Höhe der "Hitbox" des Objektes
-    public boolean draggable;           //Verschiebbarkeitsstatus
-    public boolean lockedToMouse;       //Status der Bindung an die Maus (Das Objekt wird mit der Maus mitbewegt)
+     boolean interactable;        //Interagierbarkeitsstatus
+     boolean collidable;          //Kolidierbarkeitsstatus
+    int sizeX;                   //Breite der "Hitbox" des Objektes
+     int sizeY;                   //Höhe der "Hitbox" des Objektes
+     boolean draggable;           //Verschiebbarkeitsstatus
+     boolean lockedToMouse;       //Status der Bindung an die Maus (Das Objekt wird mit der Maus mitbewegt)
 
-    //Einordnung als Unter/ChildObjekt eines anderen Objektes
-    boolean childObject;
 
     /**
      * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
@@ -44,7 +42,6 @@ public  abstract class GameObject  {
      this.sizeY =0;
      this.interactable=false;
      this.textToDisplay ="";
-     this.childObject =false;
      this.draggable =false;
      this.collidable=false;
     }
@@ -69,7 +66,6 @@ public  abstract class GameObject  {
         this.sizeY =sizeY;
         this.interactable=true;
         this.textToDisplay="";
-        this.childObject =false;
         this.draggable =false;
         this.collidable=false;
     }
@@ -152,14 +148,6 @@ public  abstract class GameObject  {
 
     public void setSizeY(int sizeY) {
         this.sizeY = sizeY;
-    }
-
-    public boolean isChildObject() {
-        return childObject;
-    }
-
-    public void setChildObject(boolean childObject) {
-        this.childObject = childObject;
     }
 
     public boolean isDraggable() {

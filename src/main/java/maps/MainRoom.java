@@ -26,6 +26,7 @@ public  class MainRoom{
         gameObjects.addGameObjects(buildCollisionBoxes());
         Menu mainRoom =new Menu(ImageLoader.loadImage("empty.png"),true,0,0,0,1024,1024,gameObjects);
         mainRoom.setInteractable(false);
+        mainRoom.setDraggable(false);
         return mainRoom;
     }
 
@@ -52,7 +53,7 @@ public  class MainRoom{
 
         //Menü des Hauptinventars erstellen
         Menu storageMenu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,10,10,600,32*10,320,new GameObjects());
-        VisibilityToggler visibilityTogglerMainStorage = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,storageMenu);
+        VisibilityToggler visibilityTogglerMainStorage = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,storageMenu);
         storageMenu.addMenuGameObject(visibilityTogglerMainStorage);
 
         Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainStorage",1,0,32,10,9);
@@ -62,7 +63,7 @@ public  class MainRoom{
         gameObjects.addGameObject(storageMenu);
 
         //Truhe/Button zum Öffnen des Hauptinventars erstellen
-        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",1.5),true,1,100,500,96,96,false,storageMenu);
+        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",1.5),true,1,100,500,96,96,storageMenu);
         visibilityTogglerMainStorage2.setCollidable(true);
         visibilityTogglerMainStorage2.setRange(200);
         gameObjects.addGameObject(visibilityTogglerMainStorage2);
@@ -100,7 +101,7 @@ public  class MainRoom{
       CollisionBox c3 =new CollisionBox( 0,510,60,300);
       CollisionBox c4 = new CollisionBox(0,800,26,300);
       CollisionBox c5 =new CollisionBox( 1000,800,60,300);
-      CollisionBox c6 = new CollisionBox(950,510,26,300);
+      CollisionBox c6 = new CollisionBox(950,510,500,300);
 
       gameObjects.addGameObject(c1);
       gameObjects.addGameObject(c2);
@@ -109,7 +110,7 @@ public  class MainRoom{
       gameObjects.addGameObject(c5);
       gameObjects.addGameObject(c6);
       gameObjects.addGameObject(c7);
-      //gameObjects.addGameObject(c8);
+      gameObjects.addGameObject(c8);
       return gameObjects;
 
 

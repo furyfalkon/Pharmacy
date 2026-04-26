@@ -1,11 +1,10 @@
 package gameObject;
 
-import gameObject.butons.VisibilityToggler;
 import java.awt.*;
 /**
  * Menüs/Container als spezielles GameObjekt welches andere Game Objekte enthält
  * */
-public class Menu extends  GameObject  {
+public class Menu extends  GameObject{
 
     GameObjects menuGameObjects;        //Lise der im Menü/Container gespeicherten GameObjekte
     Point localMousePosition;           //die Position der Maus im Menü
@@ -48,30 +47,26 @@ public class Menu extends  GameObject  {
      * update Methode für ein menü und seine Child Objekte
      * @return die geupdateten GameObjekte
      */
-    public  GameObjects updateMenu(int superPosX,int superPosY,int superLayer,boolean superVisibility){
+    public  GameObjects prepareMenuForRendering(int superPosX, int superPosY, int superLayer, boolean superVisibility){
         GameObjects gameObjects= new GameObjects();
         Menu aktiveMenu = this;
-        aktiveMenu.setPositionX(superPosX+aktiveMenu.getPositionX());
-        aktiveMenu.setPositionY(superPosY+aktiveMenu.getPositionY());
-        aktiveMenu.setLayer(superLayer+aktiveMenu.getLayer());
-        aktiveMenu.setVisible(superVisibility&&aktiveMenu.isVisible());
         GameObjects aktiveMenuGameObjects = aktiveMenu.getMenuGameObjects();
         for (int j = 0; j <aktiveMenuGameObjects.getSize(); j++) {                      //alle Child Objekte durchgehen
             GameObject aktiveChildGameObject = aktiveMenuGameObjects.getGameObject(j);  //das aktuelle ChildGameObjekt speichern
             //die Absolute/globale position des child Objektes berechnen
-            int absoluteChildObjectPositionX =aktiveMenu.getPositionX()+aktiveChildGameObject.getPositionX();
-            int absoluteChildObjectPositionY =aktiveMenu.getPositionY()+aktiveChildGameObject.getPositionY();
-            int absoluteChildObjectLayer= aktiveMenu.getLayer()+aktiveChildGameObject.getLayer();   //den absoluten/globalen layer des Child Objekts berechnen
+            int absoluteChildObjectPositionX =superPosX+aktiveMenu.getPositionX()+aktiveChildGameObject.getPositionX();
+            int absoluteChildObjectPositionY =superPosY+aktiveMenu.getPositionY()+aktiveChildGameObject.getPositionY();
+            int absoluteChildObjectLayer= superLayer+aktiveMenu.getLayer()+aktiveChildGameObject.getLayer();   //den absoluten/globalen layer des Child Objekts berechnen
             //Objekt sichtbarkeit im Globalen kontext berechnen
             boolean absoluteChildObjectVisibility=false;    //alle Objekte sind im absoluten/globalen Kontext nicht Sichtbar
-            if (aktiveMenu.isVisible()){                    //außer das Menü ist sichtbar
+            if (superVisibility&&aktiveMenu.isVisible()){                    //außer das Menü ist sichtbar
                 if (aktiveChildGameObject.isVisible()){     //und das Objekt ist im Lokalen Kontext(im Menü) auch sichtbar
                     absoluteChildObjectVisibility=true;
                 }
             }
 
             if (aktiveChildGameObject instanceof Menu){
-               gameObjects.addGameObjects( ((Menu) aktiveChildGameObject).updateMenu(
+               gameObjects.addGameObjects( ((Menu) aktiveChildGameObject).prepareMenuForRendering(
                        aktiveMenu.getPositionX(),
                        aktiveMenu.positionY,
                        aktiveMenu.layer,
@@ -93,7 +88,6 @@ public class Menu extends  GameObject  {
                 globalChildGameObject.setPositionY(absoluteChildObjectPositionY);
                 globalChildGameObject.setLayer(absoluteChildObjectLayer);
                 globalChildGameObject.setVisible(absoluteChildObjectVisibility);
-                globalChildGameObject.setChildObject(true);
                 gameObjects.addGameObject(globalChildGameObject);
 
 

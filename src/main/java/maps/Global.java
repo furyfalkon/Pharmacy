@@ -25,7 +25,7 @@ public class Global {
         //Mouse Storage Bauen
         Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseStorage",100,0,0,1,1);
         mouseStorage.setVisible(true);
-        mouseStorage.interactable=false;
+        mouseStorage.setInteractable(false);
       return mouseStorage;
     }
 
@@ -33,7 +33,7 @@ public class Global {
 
         //Menü des PlayerInventars erstellen
         Menu menu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,15,10,256,32*10,192,new GameObjects());
-        VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,menu);
+        VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,menu);
         menu.addMenuGameObject(visibilityToggler);
 
         Storage playerInventory = new Storage(ImageLoader.loadImage("InvSlot.png"),"playerInventory",1,0,32,10,5);

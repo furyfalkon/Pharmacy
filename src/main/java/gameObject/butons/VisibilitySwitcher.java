@@ -21,11 +21,10 @@ public class VisibilitySwitcher extends Button{
      * @param positionY                    die Y-Position des Menüs
      * @param sizeX                        die Breite des Menüs (des bereiches mit dem Interagiert werden kann)
      * @param sizeY                        die Höhe des Menüs (des bereiches mit dem Interagiert werden kann)
-     * @param isChildObject                ist ein Child Objekt
      * @param gameObjectToToggleVisibility1 das Objekt dessen Sichtbarkeit geändert wird
      */
-    public VisibilitySwitcher(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY, boolean isChildObject, GameObject gameObjectToToggleVisibility1,GameObject gameObjectToToggleVisibility2) {
-        super(img, visible, layer, positionX, positionY, sizeX, sizeY, isChildObject);
+    public VisibilitySwitcher(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY, GameObject gameObjectToToggleVisibility1,GameObject gameObjectToToggleVisibility2) {
+        super(img, visible, layer, positionX, positionY, sizeX, sizeY);
         this.gameObjectToToggleVisibility2=gameObjectToToggleVisibility2;
         this.gameObjectToToggleVisibility1=gameObjectToToggleVisibility1;
     }

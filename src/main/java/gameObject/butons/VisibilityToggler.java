@@ -23,11 +23,10 @@ public class VisibilityToggler extends Button {
      * @param positionY die Y-Position des Menüs
      * @param sizeX die Breite des Menüs (des bereiches mit dem Interagiert werden kann)
      * @param sizeY die Höhe des Menüs (des bereiches mit dem Interagiert werden kann)
-     * @param isChildObject ist ein Child Objekt
      * @param gameObjectToToggleVisibility das Objekt dessen Sichtbarkeit geändert wird
      */
-    public VisibilityToggler(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY, boolean isChildObject, GameObject gameObjectToToggleVisibility) {
-        super(img, visible, layer, positionX, positionY, sizeX, sizeY,isChildObject);
+    public VisibilityToggler(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY, GameObject gameObjectToToggleVisibility) {
+        super(img, visible, layer, positionX, positionY, sizeX, sizeY);
         this.gameObjectToToggleVisibility=gameObjectToToggleVisibility;
         this.range=-1;
     }

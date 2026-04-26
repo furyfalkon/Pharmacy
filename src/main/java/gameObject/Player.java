@@ -8,7 +8,6 @@ public class Player extends GameObject{
     Image[] movingDown;
     Image[] movingRight;
     Image[] movingLeft;
-    Image idling;
 
 
 
@@ -43,12 +42,6 @@ public class Player extends GameObject{
     }
 
     public Image[] getMovingLeft() {return movingLeft;}
-
-    public void setIdling(Image idling) {
-        this.idling = idling;
-    }
-
-    public Image getIdling() {return idling;}
 
     public int getMovingCycle() {
         return movingCycle;

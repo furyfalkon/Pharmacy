@@ -20,11 +20,9 @@ public abstract class Button extends GameObject implements Interactable {
      * @param positionY die Y-Position des Menüs
      * @param sizeX die Breite des Menüs (des bereiches mit dem Interagiert werden kann)
      * @param sizeY die Höhe des Menüs (des bereiches mit dem Interagiert werden kann)
-     * @param isChildObject ist ein Child Objekt
      */
-    public Button(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY, boolean isChildObject) {
+    public Button(Image img, boolean visible, int layer, int positionX, int positionY, int sizeX, int sizeY) {
         super(img, visible, layer, positionX, positionY, sizeX, sizeY);
-        setChildObject(isChildObject);
     }
 
     @Override

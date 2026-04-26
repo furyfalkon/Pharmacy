@@ -1,6 +1,7 @@
 package gamelogic;
 import gameObject.*;
 import gameObject.Menu;
+import gameObject.butons.Button;
 import gameObject.butons.VisibilitySwitcher;
 import gameObject.butons.VisibilityToggler;
 import gameObject.music.*;
@@ -36,36 +37,33 @@ public class GameLogic extends MouseInput{
                     GameObject selectedGameObject =mouseIsOnObjekt(gameObjects,mouseX,mouseY);
 
 
-                    //prüfen, ob ein Game Objekt ausgewählt wurde
+                    //prüfen, ob ein interagierbares Game Objekt ausgewählt wurde
                     if (selectedGameObject!=null){
 
-                    //Fall: es wurde auf ein Lager geklickt
-                    if (selectedGameObject instanceof Storage) {
-                    //Interagieren mit dem GameObjekt
-                    gameObjects = ((Storage) selectedGameObject).interact(
-                           gameObjects,                                                             //Übergabe der aktuellen Game Objekte
-                           MouseInput.button,                                                       //Übergabe des gedrückten Knopfes
-                           selectedGameObject.getPositionX(), selectedGameObject.getPositionY(),    //Übergabe der Lager Position
-                           MouseInput.mouseX, MouseInput.mouseY                                    //Übergabe der Maus Position
-                    );
 
-                    }
-                    //Fall: es wurde auf ein VisibilityToggler geklickt
-                    if (selectedGameObject instanceof VisibilityToggler){
-                    //Interagieren+ übergabe der aktuellen game Objekte
-                    gameObjects = ((VisibilityToggler) selectedGameObject).interact(gameObjects);
-                    }
-                    if (selectedGameObject instanceof VisibilitySwitcher){
-                        gameObjects = ((VisibilitySwitcher) selectedGameObject).interact(gameObjects);
-                    }
+                            //Fall: es wurde auf ein Lager geklickt
+                            if (selectedGameObject instanceof Storage) {
+                                //Interagieren mit dem GameObjekt
+                                gameObjects = ((Storage) selectedGameObject).interact(
+                                        gameObjects,                                                             //Übergabe der aktuellen Game Objekte
+                                        MouseInput.button,                                                       //Übergabe des gedrückten Knopfes
+                                        selectedGameObject.getPositionX(), selectedGameObject.getPositionY(),    //Übergabe der Lager Position
+                                        MouseInput.mouseX, MouseInput.mouseY                                    //Übergabe der Maus Position
+                                );
 
+                            }
+                            //Fall: es wurde auf ein VisibilityToggler geklickt
+                            if (selectedGameObject instanceof VisibilityToggler|| selectedGameObject instanceof VisibilitySwitcher) {
+                                //Interagieren+ übergabe der aktuellen game Objekte
+                                gameObjects = ((Button) selectedGameObject).interact(gameObjects);
+                            }
+                        }
 
-
-                }
 
             }
         //Mouse Clicked wieder au falsch setzen
         MouseInput.setMouseClicked(false);
+
         if (KeyInput.isKeyTyped()){
             gameObjects =updatePlayer(gameObjects);
             KeyInput.keyTyped =false;
@@ -103,11 +101,6 @@ public class GameLogic extends MouseInput{
 
 
           //Vorbereiten auf Zeichnen
-
-        /*
-        * die Game Object Liste Sortieren und so auf das Zeichnen vorbereiten
-        * */
-
 
 
         GamePanel.setGameObjectsToRender(prepareRenderGameObjekts(gameObjects));
@@ -207,41 +200,24 @@ public class GameLogic extends MouseInput{
             * festgehaltene Objekte bewegen
             * */
                 boolean dragging=false;  // status, ob bereits ein objekt gedraggt (mit der maus mitbewegt wird)
-
+                boolean d;
                 //alle Game Objekte durchgehen
                 for (int i = 0; i <gameObjects.getSize(); i++) {
                     //Das aktuelle Game Objekt Setzen
                     GameObject aktiveGameObject=gameObjects.getGameObject(i);
-                    //Das aktuelle Game Objekt ist, nicht lehr
-                    if (aktiveGameObject!=null){
-                        //Das aktuelle Game Objekt ist an die maus gebunden und die Maus ist gedrückt
-                        if (aktiveGameObject.isLockedToMouse()&& MouseInput.mousePressed){
-                            //das aktuelle Game Objekt ist ein Menü
-                            if (aktiveGameObject instanceof Menu){
-                                //Errechnen und Speichern der absoluten Position
-                                Point absolutePosition =new Point(
-                                    (int) (mousePosition.getX()-((Menu) aktiveGameObject).getLocalMousePosition().getX()),
-                                    (int) (mousePosition.getY()-((Menu) aktiveGameObject).getLocalMousePosition().getY())
-                                );
-                                //Setzen der neuen Position des Menüs
-                                aktiveGameObject.setPosition(absolutePosition);
-                            }else {
-                                //Setzen der neuen Position des aktuellen Gameobjekts
-                                aktiveGameObject.setPosition(mousePosition);
+                    if (aktiveGameObject instanceof Menu){
+                       d=drag(aktiveGameObject,mousePosition);
+                       if (d){
+                           dragging=d;
+                       }
+                        for (GameObject gameObject:((Menu) aktiveGameObject).getMenuGameObjects().getGameObjects()){
+                            d=drag(gameObject,mousePosition);
+                            if (d){
+                                dragging=d;
                             }
-
-                            gameObjects.updateGameObject(aktiveGameObject);  //das aktuelle Game Objekt updaten
-                            dragging=true;                                    //der Dragging Status wird auf wahr gesetzt
-
-
-                        }else if (aktiveGameObject.isLockedToMouse()&& !MouseInput.mousePressed){
-                            //Das aktuelle Game Objekt ist an die maus gebunden und die Maus ist nicht gedrückt
-                            aktiveGameObject.setLockedToMouse(false);       //die Bindung zur Maus aufheben
-                            aktiveGameObject.setInteractable(true);         //das aktuelle Game Objekt wieder interagierbar machen
-                            gameObjects.updateGameObject(aktiveGameObject); //das aktuelle Game Objekt updaten
-
+                        }
                     }
-                }
+
             }
 
             //Die Maus ist gedrückt aber es wird noch kein Game Objekt gedraggt
@@ -256,7 +232,7 @@ public class GameLogic extends MouseInput{
                             //Locale maus Position setzen
                             ((Menu) onObjekt).setLocalMousePosition(((Menu) onObjekt).calculateLocalMousePosition(mousePosition));
                         }
-                        gameObjects.updateGameObject(onObjekt);   // das aktuelle GameObjekt updaten
+                       // gameObjects.updateGameObject(onObjekt);   // das aktuelle GameObjekt updaten
                     }}
 
             }
@@ -264,6 +240,38 @@ public class GameLogic extends MouseInput{
 
        }
     return  gameObjects;
+    }
+
+    private static boolean drag(GameObject aktiveGameObject,Point mousePosition){
+        //Das aktuelle Game Objekt ist, nicht lehr
+        if (aktiveGameObject!=null){
+            //Das aktuelle Game Objekt ist an die maus gebunden und die Maus ist gedrückt
+            if (aktiveGameObject.isLockedToMouse()&& MouseInput.mousePressed){
+                //das aktuelle Game Objekt ist ein Menü
+                if (aktiveGameObject instanceof Menu){
+                    //Errechnen und Speichern der absoluten Position
+                    Point absolutePosition =new Point(
+                            (int) (mousePosition.getX()-((Menu) aktiveGameObject).getLocalMousePosition().getX()),
+                            (int) (mousePosition.getY()-((Menu) aktiveGameObject).getLocalMousePosition().getY())
+                    );
+                    //Setzen der neuen Position des Menüs
+                    aktiveGameObject.setPosition(absolutePosition);
+                }else {
+                    //Setzen der neuen Position des aktuellen Gameobjekts
+                    aktiveGameObject.setPosition(mousePosition);
+                }
+                //der Dragging Status wird auf wahr gesetzt
+                return true;
+
+            }else if (aktiveGameObject.isLockedToMouse()&& !MouseInput.mousePressed){
+                //Das aktuelle Game Objekt ist an die maus gebunden und die Maus ist nicht gedrückt
+                aktiveGameObject.setLockedToMouse(false);       //die Bindung zur Maus aufheben
+                aktiveGameObject.setInteractable(true);         //das aktuelle Game Objekt wieder interagierbar machen
+
+            }
+        }
+        return false;
+
     }
 
 /**
@@ -285,9 +293,12 @@ public class GameLogic extends MouseInput{
                 renderGameObjects.addGameObjects(((Storage) aktiveGameObject).prepareStorageForRendering(0,0,0,true));    //Das Lager Updaten
 
             }else if (aktiveGameObject instanceof Menu){                            //das GameObjekt ist ein Menü
-                renderGameObjects.addGameObjects(((Menu)aktiveGameObject).updateMenu(0,0,0,true));           //das Menü updaten// → die Child Objekte der Hauptliste geupdatet hinzufügen
+                renderGameObjects.addGameObjects(((Menu)aktiveGameObject).prepareMenuForRendering(0,0,0,true));           //das Menü updaten// → die Child Objekte der Hauptliste geupdatet hinzufügen
             }
         }
+        /*
+         * die Game Object Liste Sortieren und so auf das Zeichnen vorbereiten
+         * */
         renderGameObjects= Sorter.sortByLayers(renderGameObjects);
 
         return renderGameObjects;     // Die geupdateten Gameobjekte zurückgeben

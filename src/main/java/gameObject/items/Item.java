@@ -19,7 +19,6 @@ public abstract class Item extends GameObject {
         this.name = name;
         this.basevalue = basevalue;
         this.craftable = craftable;
-        setChildObject(true);
 
 
     }
@@ -29,7 +28,6 @@ public abstract class Item extends GameObject {
         this.name=templateItem.getName();
         this.basevalue=templateItem.getBasevalue();
         this.craftable=templateItem.craftable;
-        setChildObject(true);
     }
 
     public String getName() {
