@@ -13,6 +13,7 @@ public class PC {
         startScreen();
     }
 
+
     // Startbildschirm mit Bild
     public static void startScreen() {
         JFrame frame = new JFrame("LaptopFront");
