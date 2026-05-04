@@ -50,9 +50,9 @@ public class Global {
 
     private static GameObject buildPlayer(){
 
-        Image idling;
+
         Image[] movingDown = new Image[11];
-        idling= ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
+        Image idlingImage= ImageLoader.loadImage("frames_runningvorne/","ausgangspos.png",0.2);
         movingDown[0]= ImageLoader.loadImage("frames_runningvorne/","links_1.png",0.2);
         movingDown[1]=movingDown[0];
         movingDown[2]=ImageLoader.loadImage("frames_runningvorne/","links_2.png",0.2);
@@ -74,7 +74,11 @@ public class Global {
         movingUp[6]=ImageLoader.loadImage("running_hinten/","oben 7.png",3);
         movingUp[7]=ImageLoader.loadImage("running_hinten/","oben 8.png",3);
         movingUp[8]=movingUp[0];
-        Player player = new Player(idling,true,9,600,512);
+        boolean visibility =true;
+        int layer =9;
+        int positionX=600;
+        int positionY=512;
+        Player player = new Player(idlingImage,visibility,layer,positionX,positionY);
         player.setMovingDown(movingDown);
         player.setMovingUp(movingUp);
 

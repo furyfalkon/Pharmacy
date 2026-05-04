@@ -18,7 +18,7 @@ public  abstract class GameObject  {
     //Eigenschaften der Interaktion
      boolean interactable;        //Interagierbarkeitsstatus
      boolean collidable;          //Kolidierbarkeitsstatus
-    int sizeX;                   //Breite der "Hitbox" des Objektes
+     int sizeX;                   //Breite der "Hitbox" des Objektes
      int sizeY;                   //Höhe der "Hitbox" des Objektes
      boolean draggable;           //Verschiebbarkeitsstatus
      boolean lockedToMouse;       //Status der Bindung an die Maus (Das Objekt wird mit der Maus mitbewegt)

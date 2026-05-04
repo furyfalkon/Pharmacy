@@ -19,7 +19,7 @@ public class MapBuilder {
         switcher.setRange(100);
         mainRoom.addMenuGameObject(switcher);
 
-        VisibilitySwitcher switcher2 = new VisibilitySwitcher(ImageLoader.loadImage("Räume/Türen/","Tür2.png",0.3),true,4,420,500,145,280,garden,mainRoom);
+        VisibilitySwitcher switcher2 = new VisibilitySwitcher(ImageLoader.loadImage("Räume/Türen/","Tür2.png",0.3),true,4,600,500,145,280,garden,mainRoom);
         switcher2.setRange(100);
         garden.addMenuGameObject(switcher2);
 
